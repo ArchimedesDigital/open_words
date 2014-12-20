@@ -1,0 +1,6 @@
+# Development Files
+*.py[cod]
+*.swp
+*.swo
+*/lib
+__pycache__
