@@ -1,4 +1,16 @@
-"""Parse.py (parse.adb)"""
+"""
+Parse.py (relating to Words's parse.adb)
+
+Parse a word or list of input words and return word form and 
+definition
+
+"""
+
+__author__ = "Luke Hollis <luke@segetes.io>)"
+__license__ = 'MIT License. See LICENSE.'
+
+
+
 import string
 import re
 import pdb
