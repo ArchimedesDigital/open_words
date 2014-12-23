@@ -9,8 +9,6 @@ definition
 __author__ = "Luke Hollis <luke@segetes.io>)"
 __license__ = 'MIT License. See LICENSE.'
 
-
-
 import string
 import re
 import pdb
@@ -24,21 +22,28 @@ from inflects import Inflects
 class Parse:
 
 	def __init__(self, words_dict=WordsDict, addons=LatinAddons, stems=Stems, uniques=Uniques, inflects=Inflects ):
+		"""Provide a modular structure for loading the parser data"""
 
-		self.punctuation_transtable = {ord(c): None for c in string.punctuation}
+		# Parser data
 		self.dict = words_dict
 		self.addons = addons
 		self.stems = stems
 		self.uniques = uniques
 		self.inflects = inflects
 
+		# Useful for sanitizing string for parsing
+		self.punctuation_transtable = {ord(c): None for c in string.punctuation}
+
+		# Sort by length
 		self.stems.sort(key=len)
+
+		# Sort by length of ending
 		self.inflects.sort(key=lambda x: len(x['ending']))
 
 		return
 
 	def parse_line(self, line):
-		""" Parse a line of words delimited by spaces"""
+		"""Parse a line of words delimited by spaces"""
 		out = []
 		for word in line.split(" "):
 			out.append( self.parse( word ) )
@@ -68,7 +73,7 @@ class Parse:
 		return out
 
 	def latin_to_english(self, s):
-		"""Find dictionary information from Latin word"""
+		"""Find definition and word formation from Latin word"""
 		out = []
 		is_unique = False
 		infls = []
@@ -109,14 +114,18 @@ class Parse:
 
 
 	def english_to_latin(self, s):
-		"""Find dictionary information from English word"""
+		"""Find definition and word formation from English word"""
 		out = []
 
 		return out
 
 
 	def _check_stems(self, s, infls):
-		"""Determine word form and definition""" 
+		"""
+		For each inflection that was a match, remove the inflection from
+		the end of the word string and then check the resulting stem against
+		the list of stems loaded in __init__
+		""" 
 		match_stems = []
 
 		# For each of the inflections that is a match, strip the inflection from the end of the word
@@ -153,7 +162,7 @@ class Parse:
 
 
 	def _lookup_stems(self, match_stems, out):
-		"""Lookup stems in dictionary"""
+		"""Find the word id mentioned in the stem in the dictionary"""
 
 		for stem in match_stems:
 			for word in self.dict:
@@ -202,9 +211,11 @@ class Parse:
 		return s, out
 
 	def _get_word_endings(self, word):
-		"""Get the word endings for the stems in the Dictionary; 
+		"""
+		Get the word endings for the stems in the Dictionary; 
 		eventually this should be phased out in favor of including the
-		endings in the words in the dict_line dict""" 
+		endings in the words in the dict_line dict
+		""" 
 		len_w_p = len( word['parts'] )
 
 		for inf in self.inflects:
@@ -262,7 +273,9 @@ class Parse:
 		return word
 
 	def sanitize(self, input_string):
-		"""Sanitize the input string from all punct and numbers, make lowercase"""
+		"""
+		Sanitize the input string from all punct and numbers, make lowercase
+		"""
 
 		s = input_string
 		s = s.translate(self.punctuation_transtable).lower()
