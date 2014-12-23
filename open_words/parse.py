@@ -51,6 +51,8 @@ class Parse:
 		else:
 			out = self.english_to_latin(s)
 
+		out = self._format_output(out)
+
 		return out
 
 	def latin_to_english(self, s):
@@ -154,6 +156,7 @@ class Parse:
 							out[i]['stems'].append(stem)
 							break
 					if not is_in_out:
+						word = self._get_word_endings( word )
 						out.append({'w':word, 'stems':[stem]})
 
 		return out 
@@ -186,6 +189,65 @@ class Parse:
 
 		return s, out
 
+	def _get_word_endings(self, word):
+		"""Get the word endings for the stems in the Dictionary; 
+		eventually this should be phased out in favor of including the
+		endings in the words in the dict_line dict""" 
+		len_w_p = len( word['parts'] )
+
+		for inf in self.inflects:
+			# If the conjugation/declesion is a match AND the part of speech is a match (regularize V/VPAR)
+			if (
+					inf['n'] == word['n']
+				and (
+						inf['pos'] == word['pos']
+					or (
+							inf['pos'] in ["V", "VPAR"]
+						and word['pos'] in ["V", "VPAR"]
+						)
+					)
+				):
+
+				# If the word is a verb, get the 4 principle parts 
+				if word['pos'] in ["V", "VPAR"]:
+					# Pres act ind first singular
+					if len_w_p > 0:
+						if inf['form'] == "PRES  ACTIVE  IND  1 S":
+							word['parts'][0] = word['parts'][0] + inf['ending']
+
+					# Pres act inf
+					if len_w_p > 1:
+						if inf['form'] == "PRES  ACTIVE  INF  0 X":
+							word['parts'][1] = word['parts'][1] + inf['ending']
+
+					# Perf act ind first singular
+					if len_w_p > 2:
+						if inf['form'] == "PERF  ACTIVE  IND  1 S":
+							word['parts'][2] = word['parts'][2] + inf['ending']
+
+					# Perfect passive participle
+					if len_w_p > 3:
+						if inf['form'] == "NOM S M PRES PASSIVE PPL":
+							word['parts'][3] = word['parts'][3] + inf['ending']
+
+
+				# If the word is a noun or adjective, get the nominative and genetive singular forms
+				elif word['pos'] in ["N", "ADJ"]:
+					# Nominative singular 
+					if len_w_p > 0:
+						if inf['form'].startswith("NOM S"):
+							word['parts'][0] = word['parts'][0] + inf['ending']
+
+					# Genitive singular 
+					if len_w_p > 1:
+						if inf['form'].startswith("GEN S"):
+							word['parts'][1] = word['parts'][1] + inf['ending']
+
+				# Otherwise, think of something better to do later
+				else:
+					pass
+
+		return word
 
 	def sanitize(self, input_string):
 		"""Sanitize the input string from all punct and numbers, make lowercase"""
@@ -196,3 +258,33 @@ class Parse:
 		s = re.sub("\d", "", s)	
 
 		return s
+
+	def _format_output(self, out, type="condensed"):
+		"""Format the output in the designated type"""
+		new_out = []
+
+		for word in out:
+			obj = {
+					'orth': [],
+					'senses': word['w']['senses'],
+					'infls': []
+				}
+
+			try:
+				obj['orth'] = word['w']['parts']
+			except:
+				obj['orth'] = [word['w']['orth']]
+
+			for stem in word['stems']:
+				infls = []
+				for infl in stem['infls']:
+					infls.append({
+							'ending' : infl['ending'],
+							'form' : infl['form']
+						})
+
+				obj['infls'].extend(infls)
+
+			new_out.append( obj )
+
+		return new_out 
