@@ -74,9 +74,8 @@ class Parse:
 
 	def latin_to_english(self, s):
 		"""Find definition and word formation from Latin word"""
-		out = []
 		is_unique = False
-		infls = []
+		out = []
 
 		# Split enclitics
 		s, out = self._split_enclitic( s )
@@ -84,31 +83,13 @@ class Parse:
 		# Check against list of uniques
 		for u in self.uniques:
 			if s == u['orth']:
-				out.append(u)
+				out.append({'w':u, 'stems':[]})
 				is_unique = True
+				break
 
 		# If it's not in the list of uniques
 		if not is_unique:
-
-			# Check against inflection list
-			for infl in self.inflects:
-				if s.endswith( infl['ending'] ):
-					infls.append( infl )
-
-
-			# For each inflection match, check suffixes
-			"""
-			for 
-			for suffix in self.addons['suffixes']:
-				if s.endswith( suffix['orth'] ):
-					s = re.sub ( suffix['orth'] + "$", "", s )
-			"""
-
-			# Run against stems
-			match_stems = self._check_stems( s, infls )
-
-			# Lookup dict info
-			out = self._lookup_stems( match_stems, out )
+			out = self._find_forms( s )
 
 		return out
 
@@ -116,6 +97,37 @@ class Parse:
 	def english_to_latin(self, s):
 		"""Find definition and word formation from English word"""
 		out = []
+
+		return out
+
+	def _find_forms(self, s, reduced=False):
+		infls = []
+		out = []
+
+		# Check against inflection list
+		for infl in self.inflects:
+			if s.endswith( infl['ending'] ):
+				infls.append( infl )
+
+
+		# Run against stems
+		match_stems = self._check_stems( s, infls )
+
+		# Lookup dict info
+		if reduced:
+			# If it is reduced, we don't need to lookup the word ends
+			# (or we'll end up with some pretty wonky words)
+			out = self._lookup_stems( match_stems, out, False )
+		else:
+			out = self._lookup_stems( match_stems, out )
+
+		# If no matches, reduce
+		if not reduced:
+			r_out = self._reduce( s )
+
+			# If there's useful data after reducing, extend out w/data
+			if r_out:
+				out.extend( r_out )
 
 		return out
 
@@ -158,10 +170,42 @@ class Parse:
 							if not is_in_match_stems:
 								match_stems.append({ 'st':stem, 'infls':[infl] })
 
+		# While we're working out the kinks in the word form taxonomies	
+		if len(match_stems) == 0:
+			# and look up the stripped word (w) in the stems
+			for infl in infls:
+				w = re.sub ( infl['ending'] + "$", "", s )
+
+				for stem in self.stems:
+					if w == stem['orth']: 
+
+						# If the inflection and stem identify as the same part of speech
+						if (
+								infl['pos'] == stem['pos']
+							or (
+									infl['pos'] in ["VPAR", "V"]
+								and stem['pos'] in ["VPAR", "V"]
+								)
+							):
+							# Ensure it's the base form 
+							if infl['n'][0] == 0:
+								is_in_match_stems = False 
+
+								# If this stem is already in the match_stems list, add infl to that stem
+								for i, mst in enumerate(match_stems):
+									if stem == mst['st']:
+										match_stems[i]['infls'].append( infl )
+										is_in_match_stems = True
+
+								if not is_in_match_stems:
+									match_stems.append({ 'st':stem, 'infls':[infl] })
+
+
+
 		return match_stems 
 
 
-	def _lookup_stems(self, match_stems, out):
+	def _lookup_stems(self, match_stems, out, get_word_ends=True):
 		"""Find the word id mentioned in the stem in the dictionary"""
 
 		for stem in match_stems:
@@ -176,8 +220,15 @@ class Parse:
 							is_in_out = True
 							out[i]['stems'].append(stem)
 							break
+
+					# If the word isn't in the out yet 
 					if not is_in_out:
-						word = self._get_word_endings( word )
+
+						# Lookup word ends 
+						if get_word_ends:
+							word = self._get_word_endings( word )
+
+						# Finally, append new word to out
 						out.append({'w':word, 'stems':[stem]})
 
 		return out 
@@ -190,8 +241,14 @@ class Parse:
 		# Test the different tackons / packons as specified in addons.py
 		for e in self.addons['tackons']:
 			if s.endswith( e['orth'] ):
-				out.append( { 'w' : e } )
-				s = re.sub( e['orth'] + "$", "", s)
+
+				# Standardize data format
+				e['form'] = e['orth']
+
+				# Est exception
+				if s != "est":
+					out.append( { 'w' : e, "stems" : [] } )
+					s = re.sub( e['orth'] + "$", "", s)
 				break
 
 		if s.startswith( "qu" ):
@@ -216,6 +273,11 @@ class Parse:
 		eventually this should be phased out in favor of including the
 		endings in the words in the dict_line dict
 		""" 
+		end_one = False
+		end_two = False
+		end_three = False
+		end_four = False
+
 		len_w_p = len( word['parts'] )
 
 		for inf in self.inflects:
@@ -234,41 +296,61 @@ class Parse:
 				# If the word is a verb, get the 4 principle parts 
 				if word['pos'] in ["V", "VPAR"]:
 					# Pres act ind first singular
-					if len_w_p > 0:
+					if len_w_p > 0 and not end_one:
 						if inf['form'] == "PRES  ACTIVE  IND  1 S":
 							word['parts'][0] = word['parts'][0] + inf['ending']
+							end_one = True
 
 					# Pres act inf
-					if len_w_p > 1:
+					if len_w_p > 1 and not end_two:
 						if inf['form'] == "PRES  ACTIVE  INF  0 X":
 							word['parts'][1] = word['parts'][1] + inf['ending']
+							end_two = True
 
 					# Perf act ind first singular
-					if len_w_p > 2:
+					if len_w_p > 2 and not end_three:
 						if inf['form'] == "PERF  ACTIVE  IND  1 S":
 							word['parts'][2] = word['parts'][2] + inf['ending']
+							end_three = True
 
 					# Perfect passive participle
-					if len_w_p > 3:
+					if len_w_p > 3 and not end_four:
 						if inf['form'] == "NOM S M PRES PASSIVE PPL":
 							word['parts'][3] = word['parts'][3] + inf['ending']
+							end_four = True
 
 
 				# If the word is a noun or adjective, get the nominative and genetive singular forms
 				elif word['pos'] in ["N", "ADJ"]:
 					# Nominative singular 
-					if len_w_p > 0:
+					if len_w_p > 0 and not end_one:
 						if inf['form'].startswith("NOM S"):
 							word['parts'][0] = word['parts'][0] + inf['ending']
+							end_one = True
 
 					# Genitive singular 
-					if len_w_p > 1:
+					if len_w_p > 1 and not end_two:
 						if inf['form'].startswith("GEN S"):
 							word['parts'][1] = word['parts'][1] + inf['ending']
+							end_two = True
 
 				# Otherwise, think of something better to do later
 				else:
 					pass
+
+		# Finish up a little bit of standardization for forms
+		if word['pos'] in ["V", "VPAR"]:
+			if len_w_p > 2 and not end_three:
+				for inf in self.inflects:
+					if inf['form'] == "PERF  ACTIVE  IND  1 S" and inf['n'] == [0,0]:
+						word['parts'][2] = word['parts'][2] + inf['ending']
+						break
+
+			if len_w_p > 3 and not end_four:
+				for inf in self.inflects:
+					if inf['form'] == "NOM S M PERF PASSIVE PPL" and inf['n'] == [0,0]:
+						word['parts'][3] = word['parts'][3] + inf['ending']
+						break
 
 		return word
 
@@ -284,6 +366,38 @@ class Parse:
 
 		return s
 
+	def _reduce(self, s):
+		"""Reduce the stem with suffixes and try again"""
+		out = [] 
+		is_unique = False
+		found_new_match = False
+		infls = []
+		# For each inflection match, check prefixes and suffixes
+		for prefix in self.addons['prefixes']:
+			if s.startswith( prefix['orth'] ):
+				s = re.sub ( "^" + prefix['orth'], "", s )
+				out.append({ 'w' : prefix, 'stems' : [], 'addon' : "prefix" })
+				break
+		for suffix in self.addons['suffixes']:
+			if s.endswith( suffix['orth'] ):
+				s = re.sub ( suffix['orth'] + "$", "", s )
+				out.append({ 'w' : suffix, 'stems' : [], 'addon' : "suffix" })
+				break
+
+		# Find forms with the 'reduced' flag set to true
+		out = self._find_forms( s, True )
+
+		# Has reducing input string given us useful data? 
+		# If not, return false
+		for word in out: 
+			if len(word['stems']) > 0: 
+				found_new_match = True
+
+		if not found_new_match:
+			out = False
+
+		return out 
+
 	def _format_output(self, out, type="condensed"):
 		"""Format the output in the designated type"""
 		new_out = []
@@ -297,7 +411,7 @@ class Parse:
 
 			try:
 				obj['orth'] = word['w']['parts']
-			except:
+			except KeyError:
 				obj['orth'] = [word['w']['orth']]
 
 			for stem in word['stems']:
@@ -309,6 +423,9 @@ class Parse:
 						})
 
 				obj['infls'].extend(infls)
+
+			if len(obj['infls']) == 0:
+				obj['infls'] = [{'forms': word['w']['form'], 'ending':''}]
 
 			new_out.append( obj )
 
