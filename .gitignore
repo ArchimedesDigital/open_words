@@ -4,3 +4,11 @@
 *.swo
 */lib
 __pycache__
+
+
+# Some specific data from the original Words 
+# (download from the Words repo if you need them)
+*/ADDONS.LAT
+*/DICTLINE.GEN
+*/INFLECTS.LAT
+*/STEMLIST.GEN

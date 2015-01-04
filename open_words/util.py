@@ -4,7 +4,7 @@ parse.py
 
 Utility functions for parsing words and helping with lookups
 
-Largely taken from tricks_package.adb/s
+Largely taken from tricks_package.ad[b,s]
 
 
 
