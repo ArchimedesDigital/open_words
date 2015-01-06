@@ -152,8 +152,8 @@ class Parse:
 					if (
 							infl['pos'] == stem['pos']
 						or (
-								infl['pos'] in ["VPAR", "V"]
-							and stem['pos'] in ["VPAR", "V"]
+								infl['pos'] == "VPAR"
+							and stem['pos'] == "V"
 							)
 						):
 
@@ -183,8 +183,8 @@ class Parse:
 						if (
 								infl['pos'] == stem['pos']
 							or (
-									infl['pos'] in ["VPAR", "V"]
-								and stem['pos'] in ["VPAR", "V"]
+									infl['pos'] == "VPAR"
+								and stem['pos'] == "V"
 								)
 							):
 							# Ensure it's the base form 
@@ -223,6 +223,20 @@ class Parse:
 
 					# If the word isn't in the out yet 
 					if not is_in_out:
+
+						# Check the VPAR / V relationship
+						if word['pos'] == "V":
+
+							# If the stem doesn't match the 4th principle part, it's not VPAR
+							if word['parts'].index( stem['st']['orth'] ) == 3: 
+
+								# Remove "V" infls
+								stem = self._remove_extra_infls(stem, "V")
+
+							else:
+								# Remove "VPAR" infls
+								stem = self._remove_extra_infls(stem, "VPAR")
+
 
 						# Lookup word ends 
 						if get_word_ends:
@@ -397,6 +411,16 @@ class Parse:
 			out = False
 
 		return out 
+
+	def _remove_extra_infls(self, stem, remove_type="VPAR"):
+		"""Remove Vs or VPARs from a list of inflections"""
+		stem_infls_copy = stem['infls'][:]
+
+		for infl in stem_infls_copy:
+			if infl['pos'] == remove_type:
+				stem['infls'].remove(infl)
+
+		return stem
 
 	def _format_output(self, out, type="condensed"):
 		"""Format the output in the designated type"""
