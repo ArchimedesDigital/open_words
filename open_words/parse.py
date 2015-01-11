@@ -12,6 +12,7 @@ __license__ = 'MIT License. See LICENSE.'
 import string
 import re
 import pdb
+from copy import deepcopy
 from dict_line import WordsDict
 from addons import LatinAddons
 from stem_list import Stems
@@ -228,22 +229,27 @@ class Parse:
 						if word['pos'] == "V":
 
 							# If the stem doesn't match the 4th principle part, it's not VPAR
-							if word['parts'].index( stem['st']['orth'] ) == 3: 
+							try:
+								if word['parts'].index( stem['st']['orth'] ) == 3: 
 
-								# Remove "V" infls
-								stem = self._remove_extra_infls(stem, "V")
+									# Remove "V" infls
+									stem = self._remove_extra_infls(stem, "V")
 
-							else:
-								# Remove "VPAR" infls
-								stem = self._remove_extra_infls(stem, "VPAR")
+								else:
+									# Remove "VPAR" infls
+									stem = self._remove_extra_infls(stem, "VPAR")
+
+							except ValueError:
+								pdb.set_trace()
 
 
 						# Lookup word ends 
+						# Need to Clone this object - otherwise self.dict is modified 
 						if get_word_ends:
-							word = self._get_word_endings( word )
+							word_with_endings = self._get_word_endings( deepcopy( word ) )
 
 						# Finally, append new word to out
-						out.append({'w':word, 'stems':[stem]})
+						out.append({'w':word_with_endings, 'stems':[stem]})
 
 		return out 
 
@@ -443,6 +449,7 @@ class Parse:
 				for infl in stem['infls']:
 					infls.append({
 							'ending' : infl['ending'],
+							'pos' : infl['pos'],
 							'form' : infl['form']
 						})
 
@@ -451,6 +458,196 @@ class Parse:
 			if len(obj['infls']) == 0:
 				obj['infls'] = [{'forms': word['w']['form'], 'ending':''}]
 
+			# Format the morphological data for the word forms into a more useful output
+			obj = self._format_morph( obj ) 
+
 			new_out.append( obj )
 
 		return new_out 
+
+	def _format_morph(self, word):
+		"""
+		Format the morphological data of the word forms into a more semantically useful model
+		"""
+
+		for infl in word['infls']:
+			# Translate form
+			infl['form'] = self._format_form(infl['form'], infl['pos'])
+
+			# Set part of speech
+			if infl['pos'] == "N":
+				infl['pos'] = "noun" 
+			elif infl['pos'] == "V":
+				infl['pos'] = "verb" 
+			elif infl['pos'] == "VPAR":
+				infl['pos'] = "participle" 
+			elif infl['pos'] == "ADJ":
+				infl['pos'] = "adjective" 
+			elif infl['pos'] == "PREP":
+				infl['pos'] = "adjective" 
+
+		return word
+
+	def _format_form(self, form, pos):
+		"""
+		Format form data to be more useful and relevant
+
+		Nouns, Verbs, Adjectives, Participles(, Adverbs, Conjunctions, Prepositions)
+
+		Nouns, Adjectives
+		 - declension: nominative, vocative, genitive, accusative, dative, ablative, locative 
+		 - gender: male, female, neuter
+		 - number: singular, plural
+
+		Verbs
+		 - person: 1, 2, 3
+		 - number: singular, plural
+		 - mood: indicative, subjunctive
+		 - voice: active, passive
+		 - tense: present, imperfect, perfect, future, future perfect, pluperfect, infinitive, imperative
+
+		Participles
+		 - declension: nominative, vocative, genitive, accusative, dative, ablative, locative 
+		 - gender: male, female, neuter
+		 - number: singular, plural
+		 - tense: present, perfect, future
+		 - voice: active, passive
+
+		"""
+		formatted = {}
+
+		if pos in ["N", "ADJ"]:
+			# Ex. "ACC S C"
+			form = form.split(" ")
+			formatted = {
+				'declension' : self._trans_declension( form[0] ),
+				'number' : self._trans_number( form[1] ),
+				'gender' : self._trans_gender( form[2] )
+			}
+
+		elif pos == "V":
+			# Ex: "FUT   ACTIVE  IND  3 S"
+			formatted = {
+				'tense' : self._trans_tense( form[0:6].strip() ),
+				'voice' : self._trans_voice( form[6:14].strip() ),
+				'mood' : self._trans_mood( form[14:19].strip() ), 
+				'person' : int( form[19:21].strip() ),
+				'number' : self._trans_number( form[21:].strip() )
+			}
+
+		elif pos == "VPAR":
+			# Ex: "VOC P N PRES ACTIVE  PPL"
+			formatted = {
+				'declension' : self._trans_declension( form[0:4].strip() ),
+				'number' : self._trans_number( form[4:6].strip() ),
+				'gender' : self._trans_gender( form[6:8].strip() ),
+				'tense' : self._trans_voice( form[8:13].strip() ),
+				'voice' : self._trans_voice( form[13:21].strip() )
+			}
+
+
+		else:
+			pdb.set_trace()
+			formatted = {
+				'form' : form
+			}
+
+		return formatted
+
+	def _trans_declension(self, abb):
+		w = ''
+		declensions = {
+			'NOM' : "nominative",
+			'VOC' : "vocative",
+			'GEN' : "genitive",
+			'DAT' : "dative",
+			'ACC' : "accusative",
+			'LOC' : "locative",
+			'ABL' : "ablative"
+		}
+		try:
+			w = declensions[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
+
+	def _trans_number(self, abb):
+		w = ''
+		numbers = {
+			'S' : "singular",
+			'P' : "plural"
+		}
+
+		try:
+			w = numbers[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
+
+	def _trans_gender(self, abb):
+		w = ''
+		genders = {
+			'M' : "masculine", 
+			'F' : "feminine",
+			'N' : "neuter",
+			'C' : "C", 
+			'X' : ""
+		}
+		try:
+			w = genders[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
+
+	def _trans_mood(self, abb):
+		w = ''
+		moods = {
+			'IND' : "indicative",
+			'SUB' : "subjunctive",
+			'IMP' : "imperative", 
+			'INF' : "infinitive"
+		}
+
+		try:
+			w = moods[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
+
+	def _trans_voice(self, abb):
+		w = ''
+		voices = {
+			'ACTIVE' : "active", 
+			'PASSIVE' : "passive"
+		}
+
+		try:
+			w = voices[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
+
+	def _trans_tense(self, abb):
+		w = ''
+
+		tenses = {
+			'PRES' : "present",
+			'IMPF' : "imperfect", 
+			'PERF' : "perfect",
+			'FUT' : "future", 
+			'FUTP' : "future perfect", 
+			'PLUP' : "pluperfect",
+			'INF' : "infinitive"
+		}
+
+		try:
+			w = tenses[ abb ]
+		except:
+			pdb.set_trace()
+
+		return w
