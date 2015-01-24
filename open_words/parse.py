@@ -136,6 +136,7 @@ class Parse:
 			if r_out:
 				out.extend( r_out )
 
+
 		return out
 
 
@@ -168,11 +169,23 @@ class Parse:
 						if infl['n'][0] == stem['n'][0]:
 							is_in_match_stems = False 
 
-							# If this stem is already in the match_stems list, add infl to that stem
+							# If this stem is already in the match_stems list, add infl to that stem (if not already an infl in that stem list)
 							for i, mst in enumerate(match_stems):
 								if stem == mst['st']:
-									match_stems[i]['infls'].append( infl )
 									is_in_match_stems = True
+
+									# So the matches a stem in the match_stems.  Is it unique to that stem's infls. If so, append it to that stem's infls. 
+									is_in_stem_infls = False
+									for stem_infl in mst['infls']:
+										if stem_infl['form'] == infl['form']:
+											is_in_stem_infls = True
+											# we found a match, stop looking
+											break
+
+									if not is_in_stem_infls:
+										mst['infls'].append( infl )
+
+
 
 							if not is_in_match_stems:
 								match_stems.append({ 'st':stem, 'infls':[infl] })
@@ -438,23 +451,26 @@ class Parse:
 			# Format the stems / inflections of the new object
 			if 'stems' in word: 
 				for stem in word['stems']:
-					infls = []
+					to_add_infls = []
 					for infl in stem['infls']:
 
 						# Ensure the infl isn't already in the infls
 						is_in_formatted_infls = False
-						for formatted_infl in infls:
+						for formatted_infl in to_add_infls:
 							if infl['form'] == formatted_infl['form']:
 								is_in_formatted_infls = True 
 
 						if not is_in_formatted_infls:
-							infls.append({
+							to_add_infls.append({
 									'ending' : infl['ending'],
 									'pos' : infl['pos'],
 									'form' : infl['form']
 								})
 
-					obj['infls'].extend(infls)
+					for formatted_infl in to_add_infls:
+						if formatted_infl not in obj['infls']:
+							obj['infls'].append(formatted_infl)
+
 			else:
 				word['w']['form'] = word['w']['pos']
 
