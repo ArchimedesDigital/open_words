@@ -7,17 +7,17 @@ definition
 """
 
 __author__ = "Luke Hollis <luke@segetes.io>)"
-__license__ = 'MIT License. See LICENSE.'
+__license__ = "MIT License. See LICENSE."
 
 import string
 import re
 import pdb
 from copy import deepcopy
-from dict_line import WordsDict
-from addons import LatinAddons
-from stem_list import Stems
-from uniques import Uniques
-from inflects import Inflects
+from .dict_line import WordsDict
+from .addons import LatinAddons
+from .stem_list import Stems
+from .uniques import Uniques
+from .inflects import Inflects
 
 
 class Parse:
@@ -33,7 +33,7 @@ class Parse:
 		self.inflects = inflects
 
 		# Useful for sanitizing string for parsing
-		self.punctuation_transtable = {ord(c): None for c in string.punctuation}
+		self.punctuation_transtable = {ord(c): " " for c in string.punctuation}
 
 		# Sort by length
 		self.stems.sort(key=len)
@@ -46,11 +46,13 @@ class Parse:
 	def parse_line(self, line):
 		"""Parse a line of words delimited by spaces"""
 		out = []
+		line = self.sanitize( line )
 		for word in line.split(" "):
-			out.append( self.parse( word ) )
+			if len(word):
+				out.append( self.parse( word ) )
 		return out
 
-	def parse(self, input_string, direction="latin_to_english"):
+	def parse(self, input_string, direction="latin_to_english", formatted=True):
 		"""
 		Parse an input string as a Latin word and look it up in the Words dictionary.
 
@@ -60,7 +62,7 @@ class Parse:
 		"""
 		out = []
 
-		s = self.sanitize(input_string)
+		s = input_string 
 
 		# Do the lookup based on the direction of the parse 
 		if direction == "latin_to_english":
@@ -69,9 +71,10 @@ class Parse:
 		else:
 			out = self.english_to_latin(s)
 
-		out = self._format_output(out)
+		if formatted:
+			out = self._format_output(out)
 
-		return out
+		return { 'word' : s, 'defs' : out }
 
 	def latin_to_english(self, s):
 		"""Find definition and word formation from Latin word"""
@@ -94,11 +97,10 @@ class Parse:
 
 		return out
 
-
 	def english_to_latin(self, s):
 		"""Find definition and word formation from English word"""
 		out = []
-
+		print(" -- Still need to build English to Latin")
 		return out
 
 	def _find_forms(self, s, reduced=False):
@@ -108,22 +110,26 @@ class Parse:
 		# Check against inflection list
 		for infl in self.inflects:
 			if s.endswith( infl['ending'] ):
-				infls.append( infl )
 
+				# If we've already found the longest inflection
+				if len( infls ) > 0 and ( len( infls[0]['ending'] ) > len( infl['ending'] ) ):
+						break
+				else:
+					infls.append( infl )
 
 		# Run against stems
-		match_stems = self._check_stems( s, infls )
+		stems = self._check_stems( s, infls )
 
 		# Lookup dict info
 		if reduced:
 			# If it is reduced, we don't need to lookup the word ends
 			# (or we'll end up with some pretty wonky words)
-			out = self._lookup_stems( match_stems, out, False )
+			out = self._lookup_stems( stems, out, False )
 		else:
-			out = self._lookup_stems( match_stems, out )
+			out = self._lookup_stems( stems, out )
 
-		# If no matches, reduce
-		if not reduced:
+		# If not already reduced, reduce the word and recurse
+		if len( out ) == 0 and not reduced:
 			r_out = self._reduce( s )
 
 			# If there's useful data after reducing, extend out w/data
@@ -136,8 +142,8 @@ class Parse:
 	def _check_stems(self, s, infls):
 		"""
 		For each inflection that was a match, remove the inflection from
-		the end of the word string and then check the resulting stem against
-		the list of stems loaded in __init__
+		the end of the word string and then check the resulting stem
+		against the list of stems loaded in __init__
 		""" 
 		match_stems = []
 
@@ -171,37 +177,6 @@ class Parse:
 							if not is_in_match_stems:
 								match_stems.append({ 'st':stem, 'infls':[infl] })
 
-		# While we're working out the kinks in the word form taxonomies	
-		if len(match_stems) == 0:
-			# and look up the stripped word (w) in the stems
-			for infl in infls:
-				w = re.sub ( infl['ending'] + "$", "", s )
-
-				for stem in self.stems:
-					if w == stem['orth']: 
-
-						# If the inflection and stem identify as the same part of speech
-						if (
-								infl['pos'] == stem['pos']
-							or (
-									infl['pos'] == "VPAR"
-								and stem['pos'] == "V"
-								)
-							):
-							# Ensure it's the base form 
-							if infl['n'][0] == 0:
-								is_in_match_stems = False 
-
-								# If this stem is already in the match_stems list, add infl to that stem
-								for i, mst in enumerate(match_stems):
-									if stem == mst['st']:
-										match_stems[i]['infls'].append( infl )
-										is_in_match_stems = True
-
-								if not is_in_match_stems:
-									match_stems.append({ 'st':stem, 'infls':[infl] })
-
-
 
 		return match_stems 
 
@@ -217,9 +192,26 @@ class Parse:
 					# If word already in out, add stem to word stems
 					is_in_out = False 
 					for i, w in enumerate(out):
-						if 'id' in w['w'] and word['id'] == w['w']['id']:
+						if (
+								'id' in w['w'] and word['id'] == w['w']['id']
+							or 
+								w['w']['orth'] == word['orth']
+							):
+
+							# It is in the out list already, flag and then check if the stem is already in the stems
 							is_in_out = True
-							out[i]['stems'].append(stem)
+
+							# Ensure the stem is not already in the out word stems
+							is_in_out_word_stems = False
+							for st in out[i]['stems']:
+								if st == stem:
+									is_in_out_word_stems = True
+									# We have a match, break the loop
+									break
+
+							if not is_in_out_word_stems: 
+								out[i]['stems'].append(stem)
+							# If we matched a word in the out, break the loop
 							break
 
 					# If the word isn't in the out yet 
@@ -229,27 +221,25 @@ class Parse:
 						if word['pos'] == "V":
 
 							# If the stem doesn't match the 4th principle part, it's not VPAR
-							try:
-								if word['parts'].index( stem['st']['orth'] ) == 3: 
+							if word['parts'].index( stem['st']['orth'] ) == 3: 
 
-									# Remove "V" infls
-									stem = self._remove_extra_infls(stem, "V")
+								# Remove "V" infls
+								stem = self._remove_extra_infls(stem, "V")
 
-								else:
-									# Remove "VPAR" infls
-									stem = self._remove_extra_infls(stem, "VPAR")
+							else:
+								# Remove "VPAR" infls
+								stem = self._remove_extra_infls(stem, "VPAR")
 
-							except ValueError:
-								pdb.set_trace()
 
 
 						# Lookup word ends 
 						# Need to Clone this object - otherwise self.dict is modified 
+						word_clone = deepcopy( word )
 						if get_word_ends:
-							word_with_endings = self._get_word_endings( deepcopy( word ) )
+							word_clone = self._get_word_endings( word_clone )
 
 						# Finally, append new word to out
-						out.append({'w':word_with_endings, 'stems':[stem]})
+						out.append( { 'w': word_clone, 'stems': [ stem ] } )
 
 		return out 
 
@@ -381,8 +371,8 @@ class Parse:
 
 		s = input_string
 		s = s.translate(self.punctuation_transtable).lower()
-		s = s.replace("—", "")
-		s = re.sub("\d", "", s)	
+		s = s.replace("—", " ")
+		s = re.sub("\d", " ", s)	
 
 		return s
 
@@ -439,29 +429,48 @@ class Parse:
 					'infls': []
 				}
 
-			try:
+			# Format the orth of the new object
+			if 'parts' in word['w']:
 				obj['orth'] = word['w']['parts']
-			except KeyError:
+			else:
 				obj['orth'] = [word['w']['orth']]
 
-			for stem in word['stems']:
-				infls = []
-				for infl in stem['infls']:
-					infls.append({
-							'ending' : infl['ending'],
-							'pos' : infl['pos'],
-							'form' : infl['form']
-						})
+			# Format the stems / inflections of the new object
+			if 'stems' in word: 
+				for stem in word['stems']:
+					infls = []
+					for infl in stem['infls']:
 
-				obj['infls'].extend(infls)
+						# Ensure the infl isn't already in the infls
+						is_in_formatted_infls = False
+						for formatted_infl in infls:
+							if infl['form'] == formatted_infl['form']:
+								is_in_formatted_infls = True 
 
+						if not is_in_formatted_infls:
+							infls.append({
+									'ending' : infl['ending'],
+									'pos' : infl['pos'],
+									'form' : infl['form']
+								})
+
+					obj['infls'].extend(infls)
+			else:
+				word['w']['form'] = word['w']['pos']
+
+			# If we still don't have any inflections associated with the object
 			if len(obj['infls']) == 0:
-				obj['infls'] = [{'forms': word['w']['form'], 'ending':''}]
+				obj['infls'] = [ { 
+						'form': word['w']['form'], 
+						'ending': '', 
+						'pos': word['w']['pos'] 
+					} ]
 
 			# Format the morphological data for the word forms into a more useful output
 			obj = self._format_morph( obj ) 
 
 			new_out.append( obj )
+
 
 		return new_out 
 
@@ -472,7 +481,7 @@ class Parse:
 
 		for infl in word['infls']:
 			# Translate form
-			infl['form'] = self._format_form(infl['form'], infl['pos'])
+			infl['form'] = self._format_form( infl['form'], infl['pos'] )
 
 			# Set part of speech
 			if infl['pos'] == "N":
@@ -485,6 +494,16 @@ class Parse:
 				infl['pos'] = "adjective" 
 			elif infl['pos'] == "PREP":
 				infl['pos'] = "adjective" 
+			elif infl['pos'] == "PRON":
+				infl['pos'] = "pronoun" 
+			elif infl['pos'] == "INTERJ":
+				infl['pos'] = "interjection" 
+			elif infl['pos'] == "NUM":
+				infl['pos'] = "number" 
+			elif infl['pos'] == "CONJ":
+				infl['pos'] = "conjunction" 
+			elif infl['pos'] == "PREP":
+				infl['pos'] = "preposition" 
 
 		return word
 
@@ -516,38 +535,56 @@ class Parse:
 		"""
 		formatted = {}
 
-		if pos in ["N", "ADJ"]:
+		if pos in ["N", "PRON", "ADJ", "NUM"]:
 			# Ex. "ACC S C"
 			form = form.split(" ")
-			formatted = {
-				'declension' : self._trans_declension( form[0] ),
-				'number' : self._trans_number( form[1] ),
-				'gender' : self._trans_gender( form[2] )
-			}
+			if len( form ) == 3:
+				formatted = {
+					'declension' : self._trans_declension( form[0] ),
+					'number' : self._trans_number( form[1] ),
+					'gender' : self._trans_gender( form[2] )
+				}
+			else:
+				formatted = {
+					'form' : form
+				}
 
 		elif pos == "V":
 			# Ex: "FUT   ACTIVE  IND  3 S"
-			formatted = {
-				'tense' : self._trans_tense( form[0:6].strip() ),
-				'voice' : self._trans_voice( form[6:14].strip() ),
-				'mood' : self._trans_mood( form[14:19].strip() ), 
-				'person' : int( form[19:21].strip() ),
-				'number' : self._trans_number( form[21:].strip() )
-			}
+			if len( form ) == 22:
+				formatted = {
+					'tense' : self._trans_tense( form[0:6].strip() ),
+					'voice' : self._trans_voice( form[6:14].strip() ),
+					'mood' : self._trans_mood( form[14:19].strip() ), 
+					'person' : int( form[19:21].strip() ),
+					'number' : self._trans_number( form[21:].strip() )
+				}
+			else:
+				formatted = {
+					'form' : form
+				}
 
 		elif pos == "VPAR":
 			# Ex: "VOC P N PRES ACTIVE  PPL"
+			if len( form ) == 24:
+				formatted = {
+					'declension' : self._trans_declension( form[0:4].strip() ),
+					'number' : self._trans_number( form[4:6].strip() ),
+					'gender' : self._trans_gender( form[6:8].strip() ),
+					'tense' : self._trans_tense( form[8:13].strip() ),
+					'voice' : self._trans_voice( form[13:21].strip() )
+				}
+			else:
+				formatted = {
+					'form' : form
+				}
+
+		elif pos in ["ADV", "INTERJ", "CONJ", "PREP", "X", "P"]:
 			formatted = {
-				'declension' : self._trans_declension( form[0:4].strip() ),
-				'number' : self._trans_number( form[4:6].strip() ),
-				'gender' : self._trans_gender( form[6:8].strip() ),
-				'tense' : self._trans_voice( form[8:13].strip() ),
-				'voice' : self._trans_voice( form[13:21].strip() )
+				'form' : form
 			}
 
-
 		else:
-			pdb.set_trace()
 			formatted = {
 				'form' : form
 			}
@@ -563,12 +600,11 @@ class Parse:
 			'DAT' : "dative",
 			'ACC' : "accusative",
 			'LOC' : "locative",
-			'ABL' : "ablative"
+			'ABL' : "ablative",
+			'X' : ""
 		}
-		try:
-			w = declensions[ abb ]
-		except:
-			pdb.set_trace()
+
+		w = declensions[ abb ]
 
 		return w
 
@@ -576,13 +612,11 @@ class Parse:
 		w = ''
 		numbers = {
 			'S' : "singular",
-			'P' : "plural"
+			'P' : "plural",
+			'X' : ""
 		}
 
-		try:
-			w = numbers[ abb ]
-		except:
-			pdb.set_trace()
+		w = numbers[ abb ]
 
 		return w
 
@@ -595,10 +629,8 @@ class Parse:
 			'C' : "C", 
 			'X' : ""
 		}
-		try:
-			w = genders[ abb ]
-		except:
-			pdb.set_trace()
+
+		w = genders[ abb ]
 
 		return w
 
@@ -608,13 +640,11 @@ class Parse:
 			'IND' : "indicative",
 			'SUB' : "subjunctive",
 			'IMP' : "imperative", 
-			'INF' : "infinitive"
+			'INF' : "infinitive",
+			'X' : ""
 		}
 
-		try:
-			w = moods[ abb ]
-		except:
-			pdb.set_trace()
+		w = moods[ abb ]
 
 		return w
 
@@ -622,13 +652,11 @@ class Parse:
 		w = ''
 		voices = {
 			'ACTIVE' : "active", 
-			'PASSIVE' : "passive"
+			'PASSIVE' : "passive",
+			'X' : ""
 		}
 
-		try:
-			w = voices[ abb ]
-		except:
-			pdb.set_trace()
+		w = voices[ abb ]
 
 		return w
 
@@ -642,12 +670,10 @@ class Parse:
 			'FUT' : "future", 
 			'FUTP' : "future perfect", 
 			'PLUP' : "pluperfect",
-			'INF' : "infinitive"
+			'INF' : "infinitive",
+			'X' : ""
 		}
 
-		try:
-			w = tenses[ abb ]
-		except:
-			pdb.set_trace()
+		w = tenses[ abb ]
 
 		return w

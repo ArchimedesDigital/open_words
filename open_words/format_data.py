@@ -9,17 +9,17 @@ def import_dicts():
 	with open('DICTLINE.GEN', encoding="ISO-8859-1") as f:
 		for i, line in enumerate( f ):
 
-			orth = line[0:19].strip()
+			orth = line[0:19].replace("zzz", "").strip()
 			parts = [orth]
 
 			if len( line[19:38].strip() ) > 0:
-				parts.append( line[19:38].strip() )
+				parts.append( line[19:38].replace("zzz", "").strip() )
 
 			if len( line[38:57].strip() ) > 0:
-				parts.append( line[38:57].strip() )
+				parts.append( line[38:57].replace("zzz", "").strip() )
 
 			if len( line[57:76].strip() ) > 0:
-				parts.append( line[57:76].strip() )
+				parts.append( line[57:76].replace("zzz", "").strip() )
 
 			if len( line[83:87].strip() ) > 0:
 				n = line[83:87].strip().split(" ")
@@ -29,6 +29,12 @@ def import_dicts():
 					except ValueError:
 						pass
 
+			senses = line[109:].strip().split(";")
+			new_senses = []
+			for sense in senses:
+				sense = sense.strip()
+				if len( sense ):
+					new_senses.append(sense)
 
 
 			data.append({
@@ -38,7 +44,7 @@ def import_dicts():
 				'pos' : line[76:83].strip(),
 				'form' : line[83:100].strip(),
 				'n' : n,
-				'senses' : line[109:].strip().split(";")
+				'senses' : new_senses 
 				})
 
 	with open('data.json', 'w') as out:
