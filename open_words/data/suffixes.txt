@@ -1,0 +1,537 @@
+SUFFIX atic
+N 2 ADJ 1 1 POS 0
+-ic; -en; --ery; -al; made of; belonging to; has property of; is like;
+SUFFIX ific
+N 2 N 3 1 M P   2
+denotes one who makes (the source noun), master of, professional in;
+SUFFIX tic
+N 2 ADJ 1 1 POS 0
+-ic; -en; --ery; -al; made of; belonging to; has property of; is like;
+SUFFIX ric
+V 4 N 3 1 F p  2
+-or; -er; indicates the doer; one who preforms the action of the verb (act.or);
+SUFFIX esc
+V 2 V 3 1 X  1
+begin to -, grow - (Inceptive or Inchoative) (esp. on 2nd declension verbs);
+SUFFIX esc
+V 2 V 3 1 X  2
+begin to -, grow - (Inceptive or Inchoative) (esp. on 2nd declension verbs);
+SUFFIX ac
+X 2 ADJ 3 1 POS 2
+-ing; having a tendency;
+SUFFIX ic
+N 2 ADJ 1 1 POS 0
+-ic; of, pertaining/belonging to; connected with; derived/coming from (place);
+SUFFIX sc
+V 2 V 3 1 X  1
+begin to -, grow - (Inceptive or Inchoative);
+SUFFIX sc
+V 2 V 3 1 X  2
+begin to -, grow - (Inceptive or Inchoative);
+SUFFIX c i
+N 2 ADJ 1 1 POS 0
+-ic; of, pertaining/belonging to; connected with; derived/coming from (place);
+SUFFIX abund
+V 2 ADJ 1 1 POS 0
+-bund; -ent; -ful; -ing; characteristic of; verbal ADJ of active force w/object;
+SUFFIX ebund
+V 2 ADJ 1 1 POS 0
+-bund; -ent; -ful; -ing; characteristic of; verbal ADJ of active force w/object;
+SUFFIX ibund
+V 2 ADJ 1 1 POS 0
+-bund; -ent; -ful; -ing; characteristic of; verbal ADJ of active force w/object;
+SUFFIX cund
+V 2 ADJ 1 1 POS 0
+-ent; -ful; -ing; characteristic of; capacity or inclination;
+SUFFIX id
+V 2 ADJ 1 1 POS 0
+-ous; tending to, in a condition of, in a state of;
+SUFFIX issime
+ADJ 2 ADV SUPER 0
+-estily; -estly; most -ly, much -ly, very -ly;
+SUFFIX ace
+N 2 ADJ 1 1 POS 0
+of/made of (material); resembling (material); similar to, -like;
+SUFFIX ose
+N 2 ADV POS 1
+-fully, -ily, -ly; -tiously;
+SUFFIX me
+ADJ 4 ADV SUPER 0
+-estily; -estly; most -ly, much -ly, very -ly;
+SUFFIX e
+N 2 ADJ 1 1 POS 0
+make of;
+SUFFIX e
+ADJ 2 ADV POS 1
+-ily; -ly;
+SUFFIX antissi
+V 1 ADJ 0 0 SUPER 0
+most -ing, much -ing, makes ADJ SUPER of verb, ('a' stem is for V 1 0);
+SUFFIX entissi
+V 1 ADJ 0 0 SUPER 0
+most -ing, much -ing, makes ADJ of verb, ('e' stem is for V 2/3);
+SUFFIX cini
+N 1 N 2 2 N t 0
+-ing, -age; forms activity/profession of person (latro.cinium => brigandage);
+SUFFIX issi
+ADJ 2 ADJ 0 0 SUPER 4
+-est, most ~, much ~, makes SUPER;
+SUFFIX issi
+V   4 ADJ 0 0 SUPER 4
+makes a verb PERF PPL into an adjective SUPER (amat.issimus => most/much loved);
+SUFFIX boni
+N 2 ADJ 1 1 POS 0
+of good;
+SUFFIX moni
+V 2 N 1 1 F t 0
+-monia; act of; means of; result of;
+SUFFIX moni
+V 2 N 2 2 N t 0
+-monia; act of; means of; result of;
+SUFFIX anti
+V 1 N 1 1 F t 0
+-ance; state of; quality of; act of; (with 1st conj verbs);
+SUFFIX anti         --  Conflicts with another -anti-
+V 1 ADJ 0 0 COMP 0
+more -ing, makes ADJ COMP of verb, ('a' stem is for V 1 0);
+SUFFIX enti
+V 1 N 1 1 F t 0
+-ence; state of; quality of; act of; (with other than 1st conj verbs);
+SUFFIX enti
+V 1 ADJ 0 0 COMP 0
+more -ing, makes ADJ COMP of verb, ('e' stem is for V 2/3);
+SUFFIX ari
+N 2 N 1 1 F t  0
+place where (argent.aria = money place, bank); female agent (rare);
+SUFFIX ari
+N 2 N 2 2 N t  0
+-arium, -ary; place where;
+SUFFIX ari
+N 2 N 2 1 M p  0
+-er; -ist; dealer in thing, maker/artisan (argent.arius = money/silver changer);
+SUFFIX ari
+N 2 ADJ 1 1 POS 0
+of, pertaining/belonging to; connected with; derived from; made of; -like;
+SUFFIX ari
+NUM 3 ADJ 1 1 POS 0
+consisting of/containing X things; X each; (with number X); of X; digits wide;
+SUFFIX ori
+N 2 N 2 2 N t  0
+-orium, -ory, -or; place where;
+SUFFIX ori
+V 4 ADJ 1 1 POS 0
+-orous, -ory; having to do with, pretaining to; tending to;
+SUFFIX iti
+ADJ 2 N 1 1 F t  0
+-ity, -ship, -ance, ility, ness; makes abstract noun of the adjective;
+SUFFIX iti
+ADJ 2 N 5 1 F t  0
+-ity, -ship, -ance, ility, ness; makes abstract noun of the adjective;
+SUFFIX iti
+V   2 N 2 2 N t  0
+-ity, -ship, -ance, ility, ness; makes abstract noun of the verb;
+SUFFIX li  l
+ADJ 2 ADJ 0 0 SUPER 4
+-est, most ~, much ~, makes ADJ with stem ending in 'l' SUPER;
+SUFFIX ri  r
+ADJ 1 ADJ 0 0 SUPER 4
+-est, most ~, much ~, makes ADJ with stem ending in 'r' SUPER;
+SUFFIX ti
+ADJ 2 N 1 1 F t  0
+-ness, makes abstract noun;
+SUFFIX i                      --  ?????????????
+V 4 ADV POS 1
+-ly; (use imagination! run -> hastily; strive -> eagerly; stand -> immediately);
+SUFFIX i
+ADJ 2 N 1 1 F t  0
+-ness, -es, makes abstract noun;
+SUFFIX i
+N 2 N 1 1 F t  0
+art or craft done by the person (abstract noun of person); office of, -ship;
+SUFFIX i
+V 2 N 2 2 N t  0
+makes abstract noun of the verb; place/instrument/result of verb action;
+SUFFIX i
+ADJ 2 ADJ 0 0 COMP 3
+-er, makes adjective comparative;
+SUFFIX i
+V   4 ADJ 0 0 COMP 3
+makes a verb PERF PPL into an adjective COMP (amat.ior => more loved);
+SUFFIX abil
+X 2 ADJ 3 2 POS  0
+-able, -ble; having the passive quality, able to, able to be;
+SUFFIX atil
+N 2 ADJ 3 2 POS 0
+-il; of a, pertaining to a, in a condition of, in a state of;
+SUFFIX ibil
+V 2 ADJ 3 2 POS  0
+-able, -ble; having the passive quality, able to, able to be; -ful;
+SUFFIX icul
+N 2 N 1 1 F x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX icul
+N 2 N 2 1 M x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX icul
+N 2 N 2 2 N x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX bil
+V 2 ADJ 3 2 POS  0
+-able, -ble; having the passive quality, able to, able to be; having ability;
+SUFFIX bul
+X 2 N 1 1 F t 0
+forms noun of means, instrument; place;
+SUFFIX bul
+X 2 N 2 2 N t 0
+forms noun of means, instrument; place;
+SUFFIX col
+N 2 N 1 1 M p 0
+denotes one who inhabits/tills/worships;
+SUFFIX cul
+V 2 N 2 2 N t 0
+denotes means or instrument or place for special purpose for action of V;
+SUFFIX ell
+N 2 N 1 1 F x 0
+little, small, -let (Diminutive) target is of gender of root => decl; !!!!!!!!
+SUFFIX ell
+N 2 N 2 1 M x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ell
+N 2 N 2 2 N x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ill
+N 2 N 1 1 F x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ill
+N 2 N 2 1 M x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ill
+N 2 N 2 2 N x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX al
+N 2 ADJ 3 2 POS 0
+-al; of a ~, pertaining to a ~, in a condition of ~, in a state of ~;
+SUFFIX il
+V 2 ADJ 3 2 POS 0
+-able, -ble; having the passive quality, able to, able to be;
+SUFFIX il
+N 2 ADJ 3 2 POS 0
+-il; of a ~, pertaining to a ~, in a condition of ~, in a state of ~;
+SUFFIX ol
+N 2 N 1 1 F x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ol
+N 2 N 2 1 M x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ol
+N 2 N 2 2 N x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ul
+N 2 N 1 1 F x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ul
+N 2 N 2 1 M x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ul
+N 2 N 2 2 N x 0
+little, small, -let (Diminutive) target is of gender of root => decl;
+SUFFIX ul
+N 2 ADJ 1 1 POS 0
+-ulus; of a, pertaining to a, in a condition of, in a state of;
+SUFFIX itim
+N 2 ADJ 1 1 POS 0
+-itime, -tine, -tane; of, belonging to (esp. of place and time);
+SUFFIX atim
+X 2 ADV POS 1
+_ by _; eg. step by step; little by little;
+SUFFIX itim
+X 2 ADV POS 1
+_ by _; eg. vir.itim => man by man;
+SUFFIX tim
+N 2 ADJ 1 1 POS 0
+-itime, -tine, -tane; of, belonging to  (esp. of place and time);
+SUFFIX ism
+X 2 N 2 1 M T   0
+-ism; makes noun of action/ideology/association/fellowship;
+SUFFIX um
+ADJ 1 ADV POS 1
+-ly;
+SUFFIX udin  t
+ADJ 2 N 3 1 F t  2
+-ness; makes abstract noun;
+SUFFIX sion
+V 4 N 3 1 F t  2
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX sion
+V 2 N 3 1 F t  2
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX tion
+V 4 N 3 1 F t  2
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX tion
+V 2 N 3 1 F t  2
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX ian
+N 2 N 2 1 M p 0
+of/belonging to  [N -> ADJ] (Cicero -> Ciceronianus);
+SUFFIX men
+V 2 N 3 2 N t 1
+act of; means of; result of;
+SUFFIX ten
+NUM 3 NUM 1 4 DIST 0 3
+each/apiece/times/fold; (NUM DIST to a late Latin form, Xceni -> Xcenteni);
+SUFFIX min
+V 2 N 3 2 N t 2
+act of; means of; result of;
+SUFFIX don
+V 2 N 3 1 F t  1
+act of or result of the action of the verb;
+SUFFIX gon
+V 2 N 3 1 F t  1
+act of or result of the action of the verb;
+SUFFIX ion
+V 4 N 3 1 F t  2
+-ing, -ion, -ery; indicates the action or result of the action of the verb;
+SUFFIX ion
+V 2 N 3 1 F t  2
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX urn
+N 2 ADJ 1 1 POS 0
+-urnal, -ily, -y, -ing; of, belonging to  (esp. of place and time);
+SUFFIX an
+NUM 2 N 2 1 M p 0
+soldiers of the Nth Legion;
+SUFFIX an
+ADJ 2 ADJ 1 1 POS 0
+-anus; (indicates former gens when adopted into another, Sejus -> Sejanus);
+SUFFIX an
+N 2 ADJ 1 1 POS 0
+-an, -ain; of, pertaining/belonging to; connected with; derived/coming from;
+SUFFIX en
+N 2 ADJ 1 1 POS 0
+-en, -ene; of, pertaining/belonging to; connected with; derived/coming from;
+SUFFIX in
+N 2 ADJ 1 1 POS 0
+-ine; -in; of, pertaining/belonging to; connected with; derived/coming from;
+SUFFIX in
+N 2 N 1 1 F t 0
+-ing; art or craft (medic.ina = art of doctoring);
+SUFFIX udo  t
+ADJ 2 N 3 1 F t  1
+-ness; makes abstract noun;
+SUFFIX sio
+V 2 N 3 1 F t  1
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX sio
+V 4 N 3 1 F t  1
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX tio
+V 2 N 3 1 F t  1
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX tio
+V 4 N 3 1 F t  1
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX do
+V 2 N 3 1 F t  1
+act of or result of the action of the verb;
+SUFFIX go
+V 2 N 3 1 F t  1
+act of or result of the action of the verb;
+SUFFIX io
+V 2 N 3 1 F t  1
+-ing, -ion, -ery; the action or result of the action of the verb;
+SUFFIX io
+V 4 N 3 1 F t  1
+-ing, -ion, -ery; indicates the action or result of the action of the verb;
+SUFFIX abiliter
+V 2 ADV POS 1
+-abaly;
+SUFFIX ibiliter
+V 2 ADV POS 1
+-ibaly;
+SUFFIX aliter
+N 2 ADV POS 1
+-ality, -ally;
+SUFFIX anter
+V 1 ADV POS 1
+-ingly;
+SUFFIX enter
+V 1 ADV POS 1
+-ingly;
+SUFFIX ester
+N 2 ADJ 1 1 POS 1
+-urnal, -ily, -y, -ing; of, belonging to  (esp. of place and time);
+SUFFIX estr
+N 2 ADJ 1 1 POS 2
+-y; of the, of, belonging to  (esp. of place and time);
+SUFFIX iter
+ADJ 2 ADV POS 1
+-ily; -ly;
+SUFFIX ior
+ADJ 2 ADJ 0 0 COMP  3
+-er, more ~; makes ADJ POS into ADJ COMP;
+SUFFIX por
+N 2 N 3 1 M P 0
+-'s boy; (slave's name adding -por for -puer to anme of master);
+SUFFIX ar
+X 2 N 3 4 N t 0
+means/instrument/place for special purpose of N/V (calco/calcar - tread/spur);
+SUFFIX ar
+N 2 ADJ 3 2 POS 0
+-ary; of a, pertaining to a; (-like?);
+SUFFIX br
+V 2 N 2 2 N t 0
+denotes means or instrument;
+SUFFIX cr
+V 2 N 2 2 N t 0
+denotes means or instrument or place for special purpose for action of V;
+SUFFIX er  t
+ADJ 2 ADV POS 1
+-ly;
+SUFFIX or
+V 4 N 3 1 M p  0
+-or; -er; indicates the doer; one who performs the action of the verb (act.or);
+SUFFIX or
+V 2 N 3 1 M p  0
+the thing of the verb; result of; (abstract noun) amor = love, timor = fear;
+SUFFIX tr
+V 2 N 2 2 N t 0
+means, instrument; place;
+SUFFIX ur
+N 2 N 1 1 F t  0
+-ure, pertaining to, use of;
+SUFFIX ur
+N 4 N 1 1 F t  0
+-ure, pertaining to, use of;
+SUFFIX etas i
+ADJ 2 N 3 1 F t  1
+-ness, makes abstract noun;
+SUFFIX itas
+ADJ 2 N 3 1 F t  1
+-ity; -ness, makes abstract noun of quality or condition;
+SUFFIX itas
+N 2 N 3 1 F t  1
+-ness, condition of being; makes abstract noun (civ.itas = citizenship);
+SUFFIX itus
+X 2 ADV POS 1
+of _; from the _; -ing;
+SUFFIX tas
+N 2 N 3 1 F t  1
+-ness, condition of being; makes abstract noun;
+SUFFIX tus
+N 2 N 3 1 F t  1
+-liness, makes abstract noun;
+SUFFIX ans
+V 1 ADJ 3 1 POS  1
+-ing, makes ADJ of verb, equivalent to PRES ACTIVE PPL ('a' stem is for V 1 0);
+SUFFIX ens
+V 1 ADJ 3 1 POS  1
+-ing, makes ADJ of verb, equivalent to PRES ACTIVE PPL ('e' stem is for V 2/3);
+SUFFIX iss
+N 2 N 1 1 F p 0
+female (whatever the noun base was);
+SUFFIX ius
+ADJ 2 ADV COMP 0
+more -ly; -ier;
+SUFFIX tus
+X 2 ADV POS 1
+of _; from the _;
+SUFFIX es
+N 2 N 3 1 F t 1
+result of; place of; (abstract noun);
+SUFFIX is
+N 2 N 3 1 F t 2
+result of; place of; (abstract noun);
+SUFFIX os
+N 2 ADJ 1 1 POS 0
+-ous, -ose; -some, full of; prone to; rich in; abounding in;
+SUFFIX us
+ADJ 2 ADV POS  1
+-ly;
+SUFFIX us
+ADJ 3 ADV COMP 0
+more -ly; -lier;
+SUFFIX olent
+N 2 ADJ 1 1 POS 0
+-olent; full of; prone to; rich in; abounding in;
+SUFFIX ulent
+N 2 ADJ 1 1 POS 0
+-ulent; full of; prone to; rich in; abounding in;
+SUFFIX ament
+V 2 N 2 2 N t 0
+-ment; -ion; act of; instrument/equipment/means for ~ing; result of ~ing;
+SUFFIX ment
+V 2 N 2 2 N t 0
+-ment; -ion; act of; instrument/equipment/means for ~ing; result of ~ing;
+SUFFIX etat i
+V 4 N 3 1 F t  2
+-ness, makes abstract noun;
+SUFFIX itat
+ADJ 2 N 3 1 F t  2
+-ity; -ness, makes abstract noun of quality or condition;
+SUFFIX itat
+N 2 N 3 1 F t  1
+-ness, condition of being; makes abstract noun (civ.itas = citizenship);
+SUFFIX tat
+N 2 N 3 1 F t  1
+-ness, condition of being; makes abstract noun;
+SUFFIX tat
+ADJ 2 N 3 1 F t  2
+-ness, makes abstract noun;
+SUFFIX tat
+V 2 V 1 1 X 4
+try to do -, keep doing -;
+SUFFIX tut
+N 2 N 3 1 F t  2
+-liness, makes abstract noun;
+SUFFIX ant
+V 1 ADJ 3 1 POS  2
+-ing, makes ADJ of verb, equivalent to PRES ACTIVE PPL ('a' stem is for V 1 0);
+SUFFIX ent
+V 1 ADJ 3 1 POS  2
+-ing, makes ADJ of verb, equivalent to PRES ACTIVE PPL ('e' stem is for V 2/3);
+SUFFIX at
+N 2 N 4 1 M t  0
+-ate, -ship, the office of; official body (consul.atus = consulate, consulship);
+SUFFIX at
+N 2 ADJ 1 1 POS 0
+-ed, having, having a, provided with; -able;
+SUFFIX it
+N 2 ADJ 1 1 POS 0
+-ed, having, having a, provided with; -able;
+SUFFIX ut
+N 2 ADJ 1 1 POS 0
+-ed, having, having a, provided with; -able;
+SUFFIX it
+V 4 V 1 1 X 1
+try to do -, keep doing - (Intensive/Iterative - forcible or iterative action);
+SUFFIX it
+V 2 V 1 1 X 1
+try to do -, keep doing - (Intensive/Iterative - forcible or iterative action);
+SUFFIX t
+V 2 V 1 1 X 1
+try to do -, keep doing - (Intensive/Iterative - forcible or iterative action);
+SUFFIX t
+N 2 ADJ 1 1 POS 0
+-ed, having, having a, provided with; -able;
+SUFFIX ativ
+N 2 ADJ 1 1 POS 0
+-ative; capable/worthy of;
+SUFFIX tav
+V 2 V 1 1 X 3
+try to do -, keep doing -;
+SUFFIX iv
+V 2 ADJ 1 1 POS 0
+-ive, -ed; tending to, pretaining to;
+SUFFIX iv
+V 4 ADJ 1 1 POS 0
+-ive, -ed; having the passive tendency; having been ...-ed;
+SUFFIX ifex
+N 2 N 3 1 M P   1
+denotes one who makes (the source noun), master of, professional in;
+SUFFIX rix
+V 4 N 3 1 F p  1
+-ess, -or; -er; indicates the doer; one who performs action of verb (act.ess);
+SUFFIX ax
+X 2 ADJ 3 1 POS 1
+-ing; having a tendency/ability;

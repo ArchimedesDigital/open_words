@@ -1,0 +1,390 @@
+PREFIX abs
+X X
+- away, off; - aside;
+PREFIX ab
+V V
+- away, off; - aside;
+PREFIX ac c
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX ac q
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX ad
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX aedi
+X X
+having to do with buildings/temples;
+PREFIX aequi
+X X
+equi-, equal;
+PREFIX af f
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX ag g
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX alti
+X X
+high, lofty;
+PREFIX ambi
+X X
+around, round about; having two;
+PREFIX amb
+X X
+around, round about; having two;
+PREFIX amphi
+X X
+having two/double, (on) both/opposite (sides), front and back;
+PREFIX am
+X X
+around, round about; having two;
+PREFIX ante
+X X
+ante-, - before;
+PREFIX anti
+X X
+anti-, counter-, against, contrary, opposite/opposed to; for ante-/before;
+PREFIX an
+X X
+around, round about; having two;
+PREFIX ap p
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX archi
+X X
+arch-, chief-, first, master; great; extremely, very;
+PREFIX as s
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX at t
+X X
+- to, towards, near, for, together (adeo => go to);
+PREFIX auri
+X X
+golden, gold-; of gold, gold-colored;
+PREFIX au f
+X X
+- away, off (aufero => make off with, carry away); - aside;
+PREFIX a
+V V
+- away, off; - aside;
+PREFIX bene
+V V
+well, good
+PREFIX beni
+V V
+well, good;
+PREFIX bis
+X X
+two, twice; double; having two;
+PREFIX bi
+X X
+two, twice; double; having two;
+PREFIX blandi
+X X
+sweet-, soothing-, smooth-, charming, flattering;
+PREFIX cardio
+X X
+cardio-, pertaining to the heart;
+PREFIX  centi
+X X
+hundred (numerical prefix);
+PREFIX  centu
+X X
+hundred (numerical prefix);
+PREFIX circum
+X X
+- around, about, near;
+PREFIX col  l
+X X
+- together, completely, forcibly, strongly;
+PREFIX com
+X X
+- together, completely, forcibly, strongly;
+PREFIX conn  e
+X X
+- together, completely, forcibly, strongly;
+PREFIX conn  i
+X X
+- together, completely, forcibly, strongly;
+PREFIX contra
+X X
+- against;
+PREFIX con
+X X
+- together; completely, strongly, forcibly, violently;
+PREFIX co
+X X
+- together; completely, strongly, forcibly, violently;
+PREFIX  decem
+X X
+ten (numerical prefix);
+PREFIX  decu
+X X
+ten (numerical prefix);
+PREFIX de
+V V
+- down, off, away, from; not; removal, reversal; utterly/completely (intensive);
+PREFIX dif f
+V V
+- apart/asunder, in different directions; separation/dispersal/process reversal;
+PREFIX dir
+V V
+- apart/asunder, in different directions; separation/dispersal/process reversal;
+PREFIX dis
+V V
+- apart/asunder, in different directions; separation/dispersal/process reversal;
+PREFIX di
+N N
+two-;
+PREFIX di
+V V
+- apart/asunder, in different directions; separation/dispersal/process reversal;
+PREFIX duode
+NUM NUM
+- less two/two less than (numerical prefix); (duodeviginti => 20 less 2 = 18);
+PREFIX  duoet
+NUM NUM
+two more than (numerical prefix); (duoetviginti => two more than twenty = 22);
+PREFIX  du
+X X
+two (numerical prefix);
+PREFIX ef f
+V V
+- out, away from; beyond; completely;
+PREFIX electro
+X X
+electro-; electrical; electronic;
+PREFIX extra
+V V
+- outside;
+PREFIX ex
+V V
+- out, away from; beyond; completely;
+PREFIX e
+V V
+- out, away from; beyond; completely;
+PREFIX inaequi
+X X
+umequal;
+PREFIX inter
+V V
+between, within; at intervals, to pieces;
+PREFIX inter
+N N
+between, within; at intervals, to pieces;
+PREFIX intra
+V V
+within, inside; - between, at intervals, to pieces;
+PREFIX intro
+V V
+within, inside; - between, at intervals, to pieces;
+PREFIX ig n
+V V
+- in, - on, - against; not -, un-;
+PREFIX II
+N N
+two-; second; (Roman numeral for 2); [IIviri/duoviri => 2 man board];
+PREFIX il l
+V V
+- in, - on, - against; not -, un-;
+PREFIX im b
+V V
+- in, - on, - against; not -, un-;
+PREFIX im m
+V V
+- in, - on, - against; not -, un-;
+PREFIX im p
+V V
+- in, - on, - against; not -, un-;
+PREFIX in
+V V
+- in, - on, - against; not -, un-;
+PREFIX in
+ADJ ADJ
+not -, un-, -less;
+PREFIX ir r
+V V
+- in, - on, - against; not -, un-;
+PREFIX male
+V V
+ill, bad;
+PREFIX multi
+N N
+much, many;
+PREFIX ne
+ADV ADV
+not;
+PREFIX non
+V V
+not;
+PREFIX ob
+V V
+- towards, to meet, in opposition;
+PREFIX  octu
+X X
+eight (numerical prefix);
+PREFIX of f
+V V
+- towards, to meet, in opposition;
+PREFIX omni
+ADJ ADJ
+all-, - everywhere;
+PREFIX op p
+V V
+- towards, to meet, in opposition;
+PREFIX os t
+V V
+- towards, to meet, in opposition;
+PREFIX per
+ADJ ADJ
+very -, - completely, - thoroughly;
+PREFIX per
+V V
+- through, thoroughly, completely, very; adds to the force of the verb;
+PREFIX por
+V V
+- forward;
+PREFIX praeter
+X X
+past or by; (drive past, drive by, flow past, flow by);
+PREFIX prae
+X X
+pre-, before -, in front of -; forth; very -, - completely, - thorughly;
+PREFIX pro
+N N
+before -, in front of -;
+PREFIX pro
+V V
+- forward; before; in front of; forth [pro-cedo => go forth, proceed, continue];
+PREFIX pseudo
+X X
+pseudo-, false; fallacious, deceitful; sperious; imitation of;
+PREFIX  quadri
+X X
+four (numerical prefix);
+PREFIX  quadru
+X X
+four (numerical prefix);
+PREFIX  quincu
+X X
+five (numerical prefix);
+PREFIX  quinqu
+X X
+five (numerical prefix);
+PREFIX  quinti
+X X
+five (numerical prefix);
+PREFIX red
+V V
+- back, - again;
+PREFIX re
+X X
+- back, - again;
+PREFIX sed
+V V
+- apart, apart from; away;
+PREFIX semi
+X X
+semi-, half, partly;
+PREFIX  septem
+X X
+seven (numerical prefix);
+PREFIX  septu
+X X
+seven (numerical prefix);
+PREFIX  sesque
+X X
+one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);
+PREFIX  sesqui
+X X
+one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);
+PREFIX  sexqui
+X X
+one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);
+PREFIX ses
+X X
+six-;
+PREFIX  sexti
+X X
+six (numerical prefix);
+PREFIX  sextu
+X X
+six (numerical prefix);
+PREFIX sex
+X X
+six-;
+--PREFIX se      --  conflict with semet
+--V V
+--- apart, apart from; away (se-cedo = go away, withdraw, secede);
+PREFIX  sim
+X X
+one (numerical prefix), single, simple;
+PREFIX sub
+V V
+sub-; - up to, - under, up from under; to the aid;
+PREFIX sub
+N N
+sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;
+PREFIX sub
+ADJ ADJ
+sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;
+PREFIX suc  c
+V V
+- up to, - under, up from under; to the aid;
+PREFIX suc c
+N N
+sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;
+PREFIX suc c
+ADJ ADJ
+sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;
+PREFIX super
+X X
+super-, over, above, upon; from above; over and above;
+PREFIX supra
+X X
+supra-, over, above, upon, on top of; earlier than; beyond; superior to;
+PREFIX superquadri
+X X
+number plus 4/5; one plus aliquot fraction; (superquadripartiens = 9/5);
+PREFIX sur
+V V
+super-, over, above;
+PREFIX sus s
+V V
+- up to, - under, up from under; to the aid;
+PREFIX trans
+V V
+- across, - over;
+PREFIX tra
+V V
+- across, - over;
+PREFIX tre i
+V V
+- across, - over;
+PREFIX  tri
+X X
+three; (also used to represent many times, persistant, extreme, gross);
+PREFIX ultra
+N N
+beyond; exceeding; over; more than;
+PREFIX ultra
+ADJ ADJ
+extremely; more; overly; more than;
+PREFIX unde
+NUM NUM
+- less one, one less than; (undetriginta => thirty less one = 29);
+PREFIX uni
+ADJ ADJ
+one-; having (only/but) one ~; (being) of one ~;
+PREFIX ve
+ADJ ADJ
+not- (vegrandis => small), without; very (vepallidus => very pale);
+PREFIX V
+N N
+five-; fifth; (Roman numeral for 5);
+PREFIX X
+N N
+ten-; tenth; (Roman numeral for 10);
