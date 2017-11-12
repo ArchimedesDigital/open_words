@@ -1,15 +1,27 @@
-# Development Files
-*.py[cod]
-*.swp
-*.swo
-*/lib
-__pycache__
-
-
-# Some specific data from the original Words 
-# (download from the Words repo if you need them)
-*/ADDONS.LAT
-*/DICTLINE.GEN
-*/INFLECTS.LAT
-*/STEMLIST.GEN
-**get_stems.py
+*.egg
+*.egg-info
+.eggs/
+*.pyc
+*$py.class
+*.pt.py
+*.txt.py
+*~
+.*.swp
+.coverage
+.coverage.*
+.tox/
+nosetests.xml
+coverage.xml
+nosetests-*.xml
+coverage-*.xml
+build/
+dist/
+bin/
+lib/
+include/
+.idea/
+bookenv/
+jyenv/
+pypyenv/
+env*/
+venv/
