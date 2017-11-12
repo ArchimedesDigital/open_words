@@ -303,14 +303,14 @@ class Parse:
 
 		len_w_p = len( word['parts'] )
 
-		for inf in self.inflects:
+		for infl in self.inflects:
 			# If the conjugation/declesion is a match AND the part of speech is a match (regularize V/VPAR)
 			if (
-					inf['n'] == word['n']
+					infl['n'] == word['n']
 				and (
-						inf['pos'] == word['pos']
+						infl['pos'] == word['pos']
 					or (
-							inf['pos'] in ["V", "VPAR"]
+							infl['pos'] in ["V", "VPAR"]
 						and word['pos'] in ["V", "VPAR"]
 						)
 					)
@@ -319,61 +319,98 @@ class Parse:
 				# If the word is a verb, get the 4 principle parts 
 				if word['pos'] in ["V", "VPAR"]:
 					# Pres act ind first singular
-					if len_w_p > 0 and not end_one:
-						if inf['form'] == "PRES  ACTIVE  IND  1 S":
-							word['parts'][0] = word['parts'][0] + inf['ending']
+					if len_w_p > 0 and not end_one and ( len( word['parts'][0] ) > 0 and word['parts'][0] != "-" ):
+						if infl['form'] == "PRES  ACTIVE  IND  1 S":
+							word['parts'][0] = word['parts'][0] + infl['ending']
 							end_one = True
 
 					# Pres act inf
-					if len_w_p > 1 and not end_two:
-						if inf['form'] == "PRES  ACTIVE  INF  0 X":
-							word['parts'][1] = word['parts'][1] + inf['ending']
+					if len_w_p > 1 and not end_two and ( len( word['parts'][1] ) > 0 and word['parts'][1] != "-" ):
+						if infl['form'] == "PRES  ACTIVE  INF  0 X":
+							word['parts'][1] = word['parts'][1] + infl['ending']
 							end_two = True
 
 					# Perf act ind first singular
-					if len_w_p > 2 and not end_three:
-						if inf['form'] == "PERF  ACTIVE  IND  1 S":
-							word['parts'][2] = word['parts'][2] + inf['ending']
+					if len_w_p > 2 and not end_three and ( len( word['parts'][2] ) > 0 and word['parts'][2] != "-" ):
+						if infl['form'] == "PERF  ACTIVE  IND  1 S":
+							word['parts'][2] = word['parts'][2] + infl['ending']
 							end_three = True
 
 					# Perfect passive participle
-					if len_w_p > 3 and not end_four:
-						if inf['form'] == "NOM S M PRES PASSIVE PPL":
-							word['parts'][3] = word['parts'][3] + inf['ending']
+					if len_w_p > 3 and not end_four and ( len( word['parts'][3] ) > 0 and word['parts'][3] != "-" ):
+						if infl['form'] == "NOM S M PRES PASSIVE PPL":
+							word['parts'][3] = word['parts'][3] + infl['ending']
 							end_four = True
 
 
 				# If the word is a noun or adjective, get the nominative and genetive singular forms
-				elif word['pos'] in ["N", "ADJ"]:
+				elif word['pos'] in ["N", "ADJ", "PRON"]:
 					# Nominative singular 
 					if len_w_p > 0 and not end_one:
-						if inf['form'].startswith("NOM S"):
-							word['parts'][0] = word['parts'][0] + inf['ending']
+						if infl['form'].startswith("NOM S") and ( len( word['parts'][0] ) > 0 and word['parts'][0] != "-" ):
+							word['parts'][0] = word['parts'][0] + infl['ending']
 							end_one = True
 
 					# Genitive singular 
 					if len_w_p > 1 and not end_two:
-						if inf['form'].startswith("GEN S"):
-							word['parts'][1] = word['parts'][1] + inf['ending']
+						if infl['form'].startswith("GEN S") and ( len( word['parts'][1] ) > 0 and word['parts'][1] != "-" ):
+							word['parts'][1] = word['parts'][1] + infl['ending']
 							end_two = True
 
-				# Otherwise, think of something better to do later
-				else:
-					pass
 
 		# Finish up a little bit of standardization for forms
+		# For Verbs
 		if word['pos'] in ["V", "VPAR"]:
+			if len_w_p > 0 and not end_one:
+				for inf in self.inflects:
+					if infl['form'] == "PRES  ACTIVE  IND  1 S" and infl['n'] == [0,0] and ( len( word['parts'][0] ) > 0 and word['parts'][0] != "-" ):
+						word['parts'][0] = word['parts'][0] + infl['ending']
+						break
+
+			if len_w_p > 1 and not end_two:
+				for inf in self.inflects:
+					if infl['form'] == "PRES  ACTIVE  INF  0 X" and infl['n'] == [0,0] and ( len( word['parts'][1] ) > 0 and word['parts'][1] != "-" ):
+						word['parts'][1] = word['parts'][1] + infl['ending']
+						break
+
 			if len_w_p > 2 and not end_three:
 				for inf in self.inflects:
-					if inf['form'] == "PERF  ACTIVE  IND  1 S" and inf['n'] == [0,0]:
-						word['parts'][2] = word['parts'][2] + inf['ending']
+					if infl['form'] == "PERF  ACTIVE  IND  1 S" and infl['n'] == [0,0] and ( len( word['parts'][2] ) > 0 and word['parts'][2] != "-" ):
+						word['parts'][2] = word['parts'][2] + infl['ending']
 						break
 
 			if len_w_p > 3 and not end_four:
 				for inf in self.inflects:
-					if inf['form'] == "NOM S M PERF PASSIVE PPL" and inf['n'] == [0,0]:
-						word['parts'][3] = word['parts'][3] + inf['ending']
+					if infl['form'] == "NOM S M PERF PASSIVE PPL" and infl['n'] == [0,0] and ( len( word['parts'][3] ) > 0 and word['parts'][3] != "-" ):
+						word['parts'][3] = word['parts'][3] + infl['ending']
 						break
+
+		# Finish for nouns
+		elif word['pos'] in ["N", "ADJ", "PRON"]:
+			# Nominative singular 
+			if len_w_p > 0 and not end_one and infl['n'] == [0,0] and ( len( word['parts'][0] ) > 0 and word['parts'][0] != "-" ):
+				for inf in self.inflects:
+					if infl['form'].startswith("NOM S"):
+						word['parts'][0] = word['parts'][0] + infl['ending']
+						end_one = True
+
+			# Genitive singular 
+			if len_w_p > 1 and not end_two and infl['n'] == [0,0] and ( len( word['parts'][1] ) > 0 and word['parts'][1] != "-" ):
+				for inf in self.inflects:
+					if infl['form'].startswith("GEN S"):
+						word['parts'][1] = word['parts'][1] + infl['ending']
+						end_two = True
+
+		# If endings really don't exist, fall back to default
+		if word['pos'] in ["V", "VPAR"]:
+			if len_w_p > 0 and not end_one and ( len( word['parts'][0] ) > 0 and word['parts'][0] != "-" ):
+				word['parts'][0] = word['parts'][0] + "o" 
+			if len_w_p > 1 and not end_two and ( len( word['parts'][1] ) > 0 and word['parts'][1] != "-" ):
+				word['parts'][1] = word['parts'][1] + "?re" 
+			if len_w_p > 2 and not end_three and ( len( word['parts'][2] ) > 0 and word['parts'][2] != "-" ):
+				word['parts'][2] = word['parts'][2] + "i" 
+			if len_w_p > 3 and not end_four and ( len( word['parts'][3] ) > 0 and word['parts'][3] != "-" ):
+				word['parts'][3] = word['parts'][3] + "us" 
 
 		return word
 
