@@ -1,12 +1,16 @@
-"""format_data"""
-import pdb
-import json
+"""
+format_data.py
 
+Format the data from the input files from Whitaker's Words
+
+"""
+
+import json
 
 
 def import_dicts():
 	data = []
-	with open('DICTLINE.GEN', encoding="ISO-8859-1") as f:
+	with open('data/DICTLINE.GEN', encoding="ISO-8859-1") as f:
 		for i, line in enumerate( f ):
 
 			orth = line[0:19].replace("zzz", "-").strip()
@@ -24,7 +28,7 @@ def import_dicts():
 			if len( line[83:87].strip() ) > 0:
 				n = line[83:87].strip().split(" ")
 				for n_i, v in enumerate(n):
-					try: 
+					try:
 						n[n_i] = int(v)
 					except ValueError:
 						pass
@@ -39,15 +43,15 @@ def import_dicts():
 
 			data.append({
 				'id' : i + 1,
-				'orth' : orth, 
-				'parts' : parts, 
+				'orth' : orth,
+				'parts' : parts,
 				'pos' : line[76:83].strip(),
 				'form' : line[83:100].strip(),
 				'n' : n,
-				'senses' : new_senses 
+				'senses' : new_senses
 				})
 
-	with open('data.json', 'w') as out:
+	with open('data/data.json', 'w') as out:
 	    json.dump(data, out)
 
 	return
@@ -59,13 +63,13 @@ def import_dicts():
 def import_stems():
 
 	data = []
-	with open('STEMLIST.GEN') as f:
+	with open('data/STEMLIST.GEN') as f:
 		for line in f:
 
 			if len( line[26:30].strip() ) > 0:
 				n = line[26:30].strip().split(" ")
 				for i, v in enumerate(n):
-					try: 
+					try:
 						n[i] = int(v)
 					except ValueError:
 						pass
@@ -78,16 +82,16 @@ def import_stems():
 				'wid' : int(line[50:].strip())
 				})
 
-	with open('data.json', 'w') as out:
+	with open('data/data.json', 'w') as out:
 	    json.dump(data, out)
 
-	return 
+	return
 
 
 
 def import_suffixes():
 
-	with open('suffixes.txt') as f:
+	with open('data/suffixes.txt') as f:
 
 		i = 0
 		obj = {}
@@ -112,7 +116,7 @@ def import_suffixes():
 				obj = {}
 				i = 0
 
-	with open('data.json', 'w') as out:
+	with open('data/data.json', 'w') as out:
 	    json.dump(data, out)
 
 
@@ -121,7 +125,7 @@ def import_suffixes():
 
 def import_prefixes():
 
-	with open('prefixes.txt') as f:
+	with open('data/prefixes.txt') as f:
 
 		i = 0
 		obj = {}
@@ -146,7 +150,7 @@ def import_prefixes():
 				obj = {}
 				i = 0
 
-	with open('data.json', 'w') as out:
+	with open('data/data.json', 'w') as out:
 	    json.dump(data, out)
 
 
@@ -196,14 +200,14 @@ def import_inflects():
 		for i, line in enumerate(f):
 
 			if len(line.strip()) > 0 and not line.strip().startswith("--"):
-				n = [] 
+				n = []
 
 				# Nouns
 
 				# No ending
 				if i in range(26,40):
 
-					n = parse_infl_type(line[7:21]) 
+					n = parse_infl_type(line[7:21])
 
 					data.append({
 							'ending' : "",
@@ -216,7 +220,7 @@ def import_inflects():
 				# 1st declension
 				elif i in range(63, 85):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 
 					data.append({
 							'ending' : line[23:33].strip(),
@@ -226,10 +230,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# 1st declension Greek	
+				# 1st declension Greek
 				elif i in range(93, 99):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -239,7 +243,7 @@ def import_inflects():
 						})
 				elif i in range(103, 113):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -249,7 +253,7 @@ def import_inflects():
 						})
 				elif i in range(118, 127):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -261,7 +265,7 @@ def import_inflects():
 				# Second declension
 				elif i in range(139, 159):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -271,7 +275,7 @@ def import_inflects():
 						})
 				elif i in range(166, 175):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -283,7 +287,7 @@ def import_inflects():
 				# Second declension er
 				elif i in range(183, 186):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -292,10 +296,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Second declension ius / ium 
+				# Second declension ius / ium
 				elif i in range(194, 201):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -304,10 +308,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Second declension ius / ium 
+				# Second declension ius / ium
 				elif i in range(209, 214):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -316,10 +320,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Second declension greek 
+				# Second declension greek
 				elif i in range(220, 229):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -329,7 +333,7 @@ def import_inflects():
 						})
 				elif i in range(236, 245):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -339,7 +343,7 @@ def import_inflects():
 						})
 				elif i in range(250, 254):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -349,7 +353,7 @@ def import_inflects():
 						})
 				elif i in range(261, 265):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -361,7 +365,7 @@ def import_inflects():
 				# Third declension
 				elif i in range(279, 299):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -371,7 +375,7 @@ def import_inflects():
 						})
 				elif i in range(305, 313):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -381,7 +385,7 @@ def import_inflects():
 						})
 				elif i in range(322, 332):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -391,7 +395,7 @@ def import_inflects():
 						})
 				elif i in range(339, 347):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -403,7 +407,7 @@ def import_inflects():
 				# Third declension greek
 				elif i in range(353, 359):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -413,7 +417,7 @@ def import_inflects():
 						})
 				elif i in range(363, 373):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -423,7 +427,7 @@ def import_inflects():
 						})
 				elif i in range(380, 393):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -433,7 +437,7 @@ def import_inflects():
 						})
 				elif i in range(403, 420):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -443,10 +447,10 @@ def import_inflects():
 						})
 
 
-				# Fourth declension	
+				# Fourth declension
 				elif i in range(427, 449):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -458,7 +462,7 @@ def import_inflects():
 				# Fourth delcension u
 				elif i in range(454, 463):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -468,7 +472,7 @@ def import_inflects():
 						})
 				elif i in range(468, 474):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -480,7 +484,7 @@ def import_inflects():
 				# Fifth declension
 				elif i in range(479, 498):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -492,7 +496,7 @@ def import_inflects():
 				# Fifth declension
 				elif i in range(479, 498):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -501,10 +505,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Abbreviations  
+				# Abbreviations
 				elif i in range(501, 502):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -513,10 +517,10 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Not declined 
+				# Not declined
 				elif i in range(504, 505):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -530,7 +534,7 @@ def import_inflects():
 				# First declension
 				elif i in range(515, 552):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -540,7 +544,7 @@ def import_inflects():
 						})
 				elif i in range(558, 581):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -550,7 +554,7 @@ def import_inflects():
 						})
 				elif i in range(588, 625):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -560,7 +564,7 @@ def import_inflects():
 						})
 				elif i in range(633, 646):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -570,7 +574,7 @@ def import_inflects():
 						})
 				elif i in range(650, 693):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -580,7 +584,7 @@ def import_inflects():
 						})
 				elif i in range(701, 765):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -592,7 +596,7 @@ def import_inflects():
 				# Third declension adj
 				elif i in range(701, 765):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -602,7 +606,7 @@ def import_inflects():
 						})
 				elif i in range(773, 795):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -612,7 +616,7 @@ def import_inflects():
 						})
 				elif i in range(801, 812):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -622,7 +626,7 @@ def import_inflects():
 						})
 				elif i in range(817, 828):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -632,7 +636,7 @@ def import_inflects():
 						})
 				elif i in range(834, 846):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[23:33].strip(),
 							'n' : n,
@@ -641,12 +645,12 @@ def import_inflects():
 							'form' : line[10:17].strip()
 						})
 
-				# Verbs 
+				# Verbs
 
 				# First conjugation
 				elif i in range(857, 1021):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -658,7 +662,7 @@ def import_inflects():
 				# Second conjugation
 				elif i in range(1037, 1159):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -670,7 +674,7 @@ def import_inflects():
 				# Third conjugation
 				elif i in range(1173, 1301):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -680,7 +684,7 @@ def import_inflects():
 						})
 				elif i in range(1311, 1450):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -692,7 +696,7 @@ def import_inflects():
 				# Fourth conjugation
 				elif i in range(1459, 1558):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -704,7 +708,7 @@ def import_inflects():
 				# Esse
 				elif i in range(1569, 1678):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -713,10 +717,10 @@ def import_inflects():
 							'form' : line[10:34].strip()
 						})
 
-				# ire 
+				# ire
 				elif i in range(1690, 1856):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -725,10 +729,10 @@ def import_inflects():
 							'form' : line[10:34].strip()
 						})
 
-				# volere` 
+				# volere`
 				elif i in range(1869, 1936):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -737,10 +741,10 @@ def import_inflects():
 							'form' : line[10:34].strip()
 						})
 
-				# defective 
+				# defective
 				elif i in range(1951, 2083):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -749,10 +753,10 @@ def import_inflects():
 							'form' : line[10:34].strip()
 						})
 
-				# kludge 
+				# kludge
 				elif i in range(2097, 2137):
 
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[38:52].strip(),
 							'n' : n,
@@ -761,12 +765,12 @@ def import_inflects():
 							'form' : line[10:34].strip()
 						})
 
-				# Participles / Supine 
+				# Participles / Supine
 
 				# participles 1-3
 				elif i in range(2144, 2618):
 
-					n = parse_infl_type(line[5:8]) 
+					n = parse_infl_type(line[5:8])
 					data.append({
 							'ending' : line[38:51].strip(),
 							'n' : n,
@@ -775,9 +779,9 @@ def import_inflects():
 							'form' : line[9:34].strip()
 						})
 
-				# supine 
+				# supine
 				elif i in range(2627, 2630):
-					n = parse_infl_type(line[7:10]) 
+					n = parse_infl_type(line[7:10])
 					data.append({
 							'ending' : line[24:30].strip(),
 							'n' : n,
@@ -788,7 +792,7 @@ def import_inflects():
 
 				# Pronouns
 				elif i in range(2686, 2965):
-					n = parse_infl_type(line[6:9]) 
+					n = parse_infl_type(line[6:9])
 					data.append({
 							'ending' : line[24:52].strip(),
 							'n' : n,
@@ -799,7 +803,7 @@ def import_inflects():
 
 				# Numerals
 				elif i in range(2971, 3941):
-					n = parse_infl_type(line[7:10]) 
+					n = parse_infl_type(line[7:10])
 					data.append({
 							'ending' : line[32:52].strip(),
 							'n' : n,
@@ -821,7 +825,7 @@ def parse_infl_type(s):
 	if len( s.strip() ) > 0:
 		n = s.strip().split(" ")
 		for i, v in enumerate(n):
-			try: 
+			try:
 				n[i] = int(v)
 			except ValueError:
 				pass

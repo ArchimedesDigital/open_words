@@ -1,49 +1,52 @@
 """
-This file lists, in human readable and editable form, a set of 
+
+From Whitaker:
+
+This file lists, in human readable and editable form, a set of
 "ADDONS" for the LATIN program.  ADDONS are prefixes, suffixes
 and enclitic type fragments used in latin word formation.
- 
+
 While this "word formation" ability is, in principle, very powerful,
 in practice, most of the common constructed words are in the dictionary
-by themselves, so the number of prefix hits are smaller than might be 
+by themselves, so the number of prefix hits are smaller than might be
 anticipated.  When there is a hit, that is, the full word was not found
 in the dictionary but the base stem was found after removing the ADDON,
 the resulting word/meaning is correct and fairly clear about 75 percent of
 the time.  In many of the remaining cases, the construction is true,
 but the usage of the word has strayed a bit and it may be a stretch to
-make the association.  In about 10 precent of the cases, the construction is 
+make the association.  In about 10 precent of the cases, the construction is
 just wrong, the word was simply derived from a different root.
- 
+
 The present algorithms can handle one prefix, one suffix, and one tackon
 in the same word, i.e., a two suffix situation (if such exists) will fail.
 {Need to make an exception for the formation of COMP, SUPER, ADV from ADJ}
- 
+
 The question remains as to whether there are too many, especially suffixes,
 so that excessive aritficial words are created - are we too imaginative?
 We will do a number of experiments when there is a sufficient data base.
- 
+
 This list can be modified by the user.  It is read in each time
 the latin program is initiated, so is always current.
- 
- 
-PREFIX is a fragment added to the beginning of a stem to modify or 
-reinforce the meaning.  "ante" added to a verb gives the meaning 
+
+
+PREFIX is a fragment added to the beginning of a stem to modify or
+reinforce the meaning.  "ante" added to a verb gives the meaning
 "before" (ante-cedo = before-move => precede).  This does not
 impact the addition of inflections on the end of the word.
- 
+
 Each PREFIX entry leads off with the identifier "PREFIX".
- 
+
 This is followed (separated by a space) by the prefix itself.
- 
+
 In the formulation used by this program, there may be a connecting
 character associated with the prefix.  For example, the prefix "ad",
 meaning "to", when applied to a word beginning with "c" changes to "ac".
 Thus with curro (run) we get ac-curro, "run to".  The CONNECT character,
 if any, is placed after the prefix, on the same line.
- 
+
 Prefixes may be thought of as not changing the base part of
-speech.  "ante" is applied to a verb stem and converts it to 
-another verb stem.  The same prefix may have different meanings 
+speech.  "ante" is applied to a verb stem and converts it to
+another verb stem.  The same prefix may have different meanings
 when applied to different parts.  "sub" applied to an adjective
 adds the meaning "somewhat", when applied to a verb it means "under".
 The parts of speech (from and to) are listed on the second line,
@@ -51,41 +54,41 @@ but are always the same.  The redundency is the result of a generality
 built into the data structure initially and never changed.
 
 The third line gives the meaning, using 78 characters or less.
- 
+
 There is provision for AGE, AREA, GEO, FREQ, or SOURCE flags.
- 
+
 The order of this list is important.  The program checks in order.
 One should check to see if "extra" is possible before trying "ex".
 The longer prefix should be placed earlier in the list.
 Otherwise prefixes are listed in alphabetical order.
- 
+
 Most prefixes transform V to V in this system.
-The same prefixes can usually be applied to N and ADJ, especially those 
+The same prefixes can usually be applied to N and ADJ, especially those
 suffix derived from verbs.  The word formation algorithm will usually
 make the two steps necessary.  In almost all cases the ADJ ADJ prefixes
 apply to those ADV derived from the adjective, but are not so listed here.
 
 X X prefixes are interpreted by the program as applying to N, ADJ, ADV, abd V.
 The program will not attempt to apply them to PRON, NUM, INTERJ or CONJ.
- 
+
 One could make all prefixes X X.  This would asure that no case was missed,
 and generally that is the philosophy of the program.  However, that might
-also produce excessive nonsense interpretations.  Probably the way to 
+also produce excessive nonsense interpretations.  Probably the way to
 proceed is to check the master dictionary (when it is sufficiently large)
 to see if there are proper formations with that prefix of other parts of
 speach, and to target in a similar manner.  If that prefix is never seen
 in classical Latin in a particular formation, the ADDONS table should
 probably ignore it.  This is yet to be done, which is one of the reasons
 that ADDONS are not coded but left text for easy change.
- 
- 
+
+
 """
 
 
 LatinAddons = {
 
 
-	# 
+	#
 	# TICKONS
 	# These are applied to a class of PRON which in the code are designated as PACKons.
 	#
@@ -128,36 +131,36 @@ LatinAddons = {
 	#
 	'prefixes' : [{"pos": "X", "form": "X X", "senses": ["- away, off; - aside;"], "orth": "abs"}, {"pos": "V", "form": "V V", "senses": ["- away, off; - aside;"], "orth": "ab"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "ac c"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "ac q"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "ad"}, {"pos": "X", "form": "X X", "senses": ["having to do with buildings/temples;"], "orth": "aedi"}, {"pos": "X", "form": "X X", "senses": ["equi-, equal;"], "orth": "aequi"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "af f"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "ag g"}, {"pos": "X", "form": "X X", "senses": ["high, lofty;"], "orth": "alti"}, {"pos": "X", "form": "X X", "senses": ["around, round about; having two;"], "orth": "ambi"}, {"pos": "X", "form": "X X", "senses": ["around, round about; having two;"], "orth": "amb"}, {"pos": "X", "form": "X X", "senses": ["having two/double, (on) both/opposite (sides), front and back;"], "orth": "amphi"}, {"pos": "X", "form": "X X", "senses": ["around, round about; having two;"], "orth": "am"}, {"pos": "X", "form": "X X", "senses": ["ante-, - before;"], "orth": "ante"}, {"pos": "X", "form": "X X", "senses": ["anti-, counter-, against, contrary, opposite/opposed to; for ante-/before;"], "orth": "anti"}, {"pos": "X", "form": "X X", "senses": ["around, round about; having two;"], "orth": "an"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "ap p"}, {"pos": "X", "form": "X X", "senses": ["arch-, chief-, first, master; great; extremely, very;"], "orth": "archi"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "as s"}, {"pos": "X", "form": "X X", "senses": ["- to, towards, near, for, together (adeo => go to);"], "orth": "at t"}, {"pos": "X", "form": "X X", "senses": ["golden, gold-; of gold, gold-colored;"], "orth": "auri"}, {"pos": "X", "form": "X X", "senses": ["- away, off (aufero => make off with, carry away); - aside;"], "orth": "au f"}, {"pos": "V", "form": "V V", "senses": ["- away, off; - aside;"], "orth": "a"}, {"pos": "V", "form": "V V", "senses": ["well, good"], "orth": "bene"}, {"pos": "V", "form": "V V", "senses": ["well, good;"], "orth": "beni"}, {"pos": "X", "form": "X X", "senses": ["two, twice; double; having two;"], "orth": "bis"}, {"pos": "X", "form": "X X", "senses": ["two, twice; double; having two;"], "orth": "bi"}, {"pos": "X", "form": "X X", "senses": ["sweet-, soothing-, smooth-, charming, flattering;"], "orth": "blandi"}, {"pos": "X", "form": "X X", "senses": ["cardio-, pertaining to the heart;"], "orth": "cardio"}, {"pos": "X", "form": "X X", "senses": ["hundred (numerical prefix);"], "orth": "centi"}, {"pos": "X", "form": "X X", "senses": ["hundred (numerical prefix);"], "orth": "centu"}, {"pos": "X", "form": "X X", "senses": ["- around, about, near;"], "orth": "circum"}, {"pos": "X", "form": "X X", "senses": ["- together, completely, forcibly, strongly;"], "orth": "col  l"}, {"pos": "X", "form": "X X", "senses": ["- together, completely, forcibly, strongly;"], "orth": "com"}, {"pos": "X", "form": "X X", "senses": ["- together, completely, forcibly, strongly;"], "orth": "conn  e"}, {"pos": "X", "form": "X X", "senses": ["- together, completely, forcibly, strongly;"], "orth": "conn  i"}, {"pos": "X", "form": "X X", "senses": ["- against;"], "orth": "contra"}, {"pos": "X", "form": "X X", "senses": ["- together; completely, strongly, forcibly, violently;"], "orth": "con"}, {"pos": "X", "form": "X X", "senses": ["- together; completely, strongly, forcibly, violently;"], "orth": "co"}, {"pos": "X", "form": "X X", "senses": ["ten (numerical prefix);"], "orth": "decem"}, {"pos": "X", "form": "X X", "senses": ["ten (numerical prefix);"], "orth": "decu"}, {"pos": "V", "form": "V V", "senses": ["- down, off, away, from; not; removal, reversal; utterly/completely (intensive);"], "orth": "de"}, {"pos": "V", "form": "V V", "senses": ["- apart/asunder, in different directions; separation/dispersal/process reversal;"], "orth": "dif f"}, {"pos": "V", "form": "V V", "senses": ["- apart/asunder, in different directions; separation/dispersal/process reversal;"], "orth": "dir"}, {"pos": "V", "form": "V V", "senses": ["- apart/asunder, in different directions; separation/dispersal/process reversal;"], "orth": "dis"}, {"pos": "N", "form": "N N", "senses": ["two-;"], "orth": "di"}, {"pos": "V", "form": "V V", "senses": ["- apart/asunder, in different directions; separation/dispersal/process reversal;"], "orth": "di"}, {"pos": "N", "form": "NUM NUM", "senses": ["- less two/two less than (numerical prefix); (duodeviginti => 20 less 2 = 18);"], "orth": "duode"}, {"pos": "N", "form": "NUM NUM", "senses": ["two more than (numerical prefix); (duoetviginti => two more than twenty = 22);"], "orth": "duoet"}, {"pos": "X", "form": "X X", "senses": ["two (numerical prefix);"], "orth": "du"}, {"pos": "V", "form": "V V", "senses": ["- out, away from; beyond; completely;"], "orth": "ef f"}, {"pos": "X", "form": "X X", "senses": ["electro-; electrical; electronic;"], "orth": "electro"}, {"pos": "V", "form": "V V", "senses": ["- outside;"], "orth": "extra"}, {"pos": "V", "form": "V V", "senses": ["- out, away from; beyond; completely;"], "orth": "ex"}, {"pos": "V", "form": "V V", "senses": ["- out, away from; beyond; completely;"], "orth": "e"}, {"pos": "X", "form": "X X", "senses": ["umequal;"], "orth": "inaequi"}, {"pos": "V", "form": "V V", "senses": ["between, within; at intervals, to pieces;"], "orth": "inter"}, {"pos": "N", "form": "N N", "senses": ["between, within; at intervals, to pieces;"], "orth": "inter"}, {"pos": "V", "form": "V V", "senses": ["within, inside; - between, at intervals, to pieces;"], "orth": "intra"}, {"pos": "V", "form": "V V", "senses": ["within, inside; - between, at intervals, to pieces;"], "orth": "intro"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "ig n"}, {"pos": "N", "form": "N N", "senses": ["two-; second; (Roman numeral for 2); [IIviri/duoviri => 2 man board];"], "orth": "II"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "il l"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "im b"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "im m"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "im p"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "in"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["not -, un-, -less;"], "orth": "in"}, {"pos": "V", "form": "V V", "senses": ["- in, - on, - against; not -, un-;"], "orth": "ir r"}, {"pos": "V", "form": "V V", "senses": ["ill, bad;"], "orth": "male"}, {"pos": "N", "form": "N N", "senses": ["much, many;"], "orth": "multi"}, {"pos": "A", "form": "ADV ADV", "senses": ["not;"], "orth": "ne"}, {"pos": "V", "form": "V V", "senses": ["not;"], "orth": "non"}, {"pos": "V", "form": "V V", "senses": ["- towards, to meet, in opposition;"], "orth": "ob"}, {"pos": "X", "form": "X X", "senses": ["eight (numerical prefix);"], "orth": "octu"}, {"pos": "V", "form": "V V", "senses": ["- towards, to meet, in opposition;"], "orth": "of f"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["all-, - everywhere;"], "orth": "omni"}, {"pos": "V", "form": "V V", "senses": ["- towards, to meet, in opposition;"], "orth": "op p"}, {"pos": "V", "form": "V V", "senses": ["- towards, to meet, in opposition;"], "orth": "os t"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["very -, - completely, - thoroughly;"], "orth": "per"}, {"pos": "V", "form": "V V", "senses": ["- through, thoroughly, completely, very; adds to the force of the verb;"], "orth": "per"}, {"pos": "V", "form": "V V", "senses": ["- forward;"], "orth": "por"}, {"pos": "X", "form": "X X", "senses": ["past or by; (drive past, drive by, flow past, flow by);"], "orth": "praeter"}, {"pos": "X", "form": "X X", "senses": ["pre-, before -, in front of -; forth; very -, - completely, - thorughly;"], "orth": "prae"}, {"pos": "N", "form": "N N", "senses": ["before -, in front of -;"], "orth": "pro"}, {"pos": "V", "form": "V V", "senses": ["- forward; before; in front of; forth [pro-cedo => go forth, proceed, continue];"], "orth": "pro"}, {"pos": "X", "form": "X X", "senses": ["pseudo-, false; fallacious, deceitful; sperious; imitation of;"], "orth": "pseudo"}, {"pos": "X", "form": "X X", "senses": ["four (numerical prefix);"], "orth": "quadri"}, {"pos": "X", "form": "X X", "senses": ["four (numerical prefix);"], "orth": "quadru"}, {"pos": "X", "form": "X X", "senses": ["five (numerical prefix);"], "orth": "quincu"}, {"pos": "X", "form": "X X", "senses": ["five (numerical prefix);"], "orth": "quinqu"}, {"pos": "X", "form": "X X", "senses": ["five (numerical prefix);"], "orth": "quinti"}, {"pos": "V", "form": "V V", "senses": ["- back, - again;"], "orth": "red"}, {"pos": "X", "form": "X X", "senses": ["- back, - again;"], "orth": "re"}, {"pos": "V", "form": "V V", "senses": ["- apart, apart from; away;"], "orth": "sed"}, {"pos": "X", "form": "X X", "senses": ["semi-, half, partly;"], "orth": "semi"}, {"pos": "X", "form": "X X", "senses": ["seven (numerical prefix);"], "orth": "septem"}, {"pos": "X", "form": "X X", "senses": ["seven (numerical prefix);"], "orth": "septu"}, {"pos": "X", "form": "X X", "senses": ["one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);"], "orth": "sesque"}, {"pos": "X", "form": "X X", "senses": ["one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);"], "orth": "sesqui"}, {"pos": "X", "form": "X X", "senses": ["one and half (numerical); one plus aliquot fraction; (sesqui-septimus = 8/7);"], "orth": "sexqui"}, {"pos": "X", "form": "X X", "senses": ["six-;"], "orth": "ses"}, {"pos": "X", "form": "X X", "senses": ["six (numerical prefix);"], "orth": "sexti"}, {"pos": "X", "form": "X X", "senses": ["six (numerical prefix);"], "orth": "sextu"}, {"pos": "X", "form": "X X", "senses": ["six-;"], "orth": "sex"}, {"pos": "-", "form": "--V V", "senses": ["--- apart, apart from; away (se-cedo = go away, withdraw, secede);"], "orth": "-- se      --  conflict with semet"}, {"pos": "X", "form": "X X", "senses": ["one (numerical prefix), single, simple;"], "orth": "sim"}, {"pos": "V", "form": "V V", "senses": ["sub-; - up to, - under, up from under; to the aid;"], "orth": "sub"}, {"pos": "N", "form": "N N", "senses": ["sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;"], "orth": "sub"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;"], "orth": "sub"}, {"pos": "V", "form": "V V", "senses": ["- up to, - under, up from under; to the aid;"], "orth": "suc  c"}, {"pos": "N", "form": "N N", "senses": ["sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;"], "orth": "suc c"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["sub-; somewhat -/-ish/rather -; under, from under/below; lesser/assistant/vice;"], "orth": "suc c"}, {"pos": "X", "form": "X X", "senses": ["super-, over, above, upon; from above; over and above;"], "orth": "super"}, {"pos": "X", "form": "X X", "senses": ["supra-, over, above, upon, on top of; earlier than; beyond; superior to;"], "orth": "supra"}, {"pos": "X", "form": "X X", "senses": ["number plus 4/5; one plus aliquot fraction; (superquadripartiens = 9/5);"], "orth": "superquadri"}, {"pos": "V", "form": "V V", "senses": ["super-, over, above;"], "orth": "sur"}, {"pos": "V", "form": "V V", "senses": ["- up to, - under, up from under; to the aid;"], "orth": "sus s"}, {"pos": "V", "form": "V V", "senses": ["- across, - over;"], "orth": "trans"}, {"pos": "V", "form": "V V", "senses": ["- across, - over;"], "orth": "tra"}, {"pos": "V", "form": "V V", "senses": ["- across, - over;"], "orth": "tre i"}, {"pos": "X", "form": "X X", "senses": ["three; (also used to represent many times, persistant, extreme, gross);"], "orth": "tri"}, {"pos": "N", "form": "N N", "senses": ["beyond; exceeding; over; more than;"], "orth": "ultra"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["extremely; more; overly; more than;"], "orth": "ultra"}, {"pos": "N", "form": "NUM NUM", "senses": ["- less one, one less than; (undetriginta => thirty less one = 29);"], "orth": "unde"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["one-; having (only/but) one ~; (being) of one ~;"], "orth": "uni"}, {"pos": "A", "form": "ADJ ADJ", "senses": ["not- (vegrandis => small), without; very (vepallidus => very pale);"], "orth": "ve"}, {"pos": "N", "form": "N N", "senses": ["five-; fifth; (Roman numeral for 5);"], "orth": "V"}, {"pos": "N", "form": "N N", "senses": ["ten-; tenth; (Roman numeral for 10);"], "orth": "X"}],
 
-	# 
-	# SUFFIX is a fragment added to the end of a stem to modify or 
-	# reinforce the meaning.  "tor" added to a verb gives the meaning 
-	# "doer of the action" (vincere = conquer, vic-tor = conqueror).  This 
+	#
+	# SUFFIX is a fragment added to the end of a stem to modify or
+	# reinforce the meaning.  "tor" added to a verb gives the meaning
+	# "doer of the action" (vincere = conquer, vic-tor = conqueror).  This
 	# does not impact the addition of inflections on the end of the word.
-	# 
+	#
 	# Each SUFFIX entry leads off with the identifier "SUFFIX".
-	# 
+	#
 	# This is followed (separated by a space) by the suffix itself.
-	# 
+	#
 	# In the formulation used by this program, there may be a connecting
 	# character associated with the suffix.  For example, the prefix "itudo",
 	# givs a noun adding the meaning "-ness", when applied to an adjective
 	# stem.  If the adjective stem ends in "i", then the suffix is "ietudo".
-	# The CONNECT character, if any, is placed after the suffix, on the same 
+	# The CONNECT character, if any, is placed after the suffix, on the same
 	# line.
-	# 
+	#
 	# Suffixes may be thought of as associated with a certain parts of
-	# speech.  In many cases application of the suffix converts a stem 
+	# speech.  In many cases application of the suffix converts a stem
 	# from one part of speech to a stem for another part of speech.
 	# Further, the resulting verb, noun or adjective is of a particular
-	# conjugation or declension.  This information is included on the 
+	# conjugation or declension.  This information is included on the
 	# second line of the suffix record.
-	# 
+	#
 	# The third line gives the meaning, using 78 characters or less.
-	# 
+	#
 	# The order of this list is important.  The program checks in order.
 	# The longer suffix should be placed earlier in the list.
 	# This list is ordered on last character of suffix, but that is not significant.
-	# 
+	#
 	# TO DO
 	# ADJ derived from N could also be derived from ADJ (try to include N roots)
 	# V can be formed from N stem, no suffix (Denominatives - to do/make _)
@@ -174,7 +177,7 @@ LatinAddons = {
 	# Each TACKON entry leads off with the identifier "TACKON".
 	#
 	# This is followed (separated by a space) by the tackon itself.
-	# 
+	#
 	# The second line gives a PART_ENTRY, information on where this is tacked.
 	# A TACKON does not change the part of speech or case from its base.
 	#

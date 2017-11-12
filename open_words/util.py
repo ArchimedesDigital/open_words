@@ -4,11 +4,10 @@ parse.py
 
 Utility functions for parsing words and helping with lookups
 
-Largely taken from tricks_package.ad[b,s]
-
-
+Largely taken from Whitaker's tricks_package.ad[b,s]
 
 """
+
 
 def is_a_vowel(char):
 
@@ -41,4 +40,3 @@ def roman_numerals(word):
 def syncope(word):
 
 	return
-
