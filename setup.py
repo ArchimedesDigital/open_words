@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    author='Luke Hollis',
-    author_email='luke@archimedes.digital',
+    author='Archimedes Digital',
+    author_email='root@archimedes.digital',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
