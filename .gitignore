@@ -25,3 +25,4 @@ jyenv/
 pypyenv/
 env*/
 venv/
+__pycache__
