@@ -7,7 +7,7 @@ Small helper function to get a list of unique stems from the inflects data
 """
 
 import re
-from inflects import Inflects
+from open_words.inflects import Inflects
 
 def get_stems(word, inflects=Inflects):
 

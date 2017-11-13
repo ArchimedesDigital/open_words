@@ -13,11 +13,11 @@ import string
 import re
 import pdb
 from copy import deepcopy
-from dict_line import WordsDict
-from addons import LatinAddons
-from stem_list import Stems
-from uniques import Uniques
-from inflects import Inflects
+from open_words.dict_line import WordsDict
+from open_words.addons import LatinAddons
+from open_words.stem_list import Stems
+from open_words.uniques import Uniques
+from open_words.inflects import Inflects
 
 
 class Parse:
