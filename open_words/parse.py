@@ -86,7 +86,7 @@ class Parse:
 
 		# Check against list of uniques
 		for u in self.uniques:
-			if s == u['orth']:
+			if s == u['orth'].lower().replace("j", "i").replace("v", "u"):
 				out.append({'w':u, 'stems':[]})
 				is_unique = True
 				break
@@ -151,10 +151,10 @@ class Parse:
 		# For each of the inflections that is a match, strip the inflection from the end of the word
 		# and look up the stripped word (w) in the stems
 		for infl in infls:
-			w = re.sub ( infl['ending'] + "$", "", s )
+			w = re.sub ( infl['ending'] + "$", "", s ).lower().replace("j", "i").replace("v", "u")
 
 			for stem in self.stems:
-				if w == stem['orth']:
+				if w == stem['orth'].lower().replace("j", "i").replace("v", "u"):
 
 					# If the inflection and stem identify as the same part of speech
 					if (
@@ -177,7 +177,7 @@ class Parse:
 									# So the matches a stem in the match_stems.  Is it unique to that stem's infls. If so, append it to that stem's infls.
 									is_in_stem_infls = False
 									for stem_infl in mst['infls']:
-										if stem_infl['form'] == infl['form']:
+										if stem_infl['form'].lower().replace("j", "i").replace("v", "u") == infl['form'].lower().replace("j", "i").replace("v", "u"):
 											is_in_stem_infls = True
 											# we found a match, stop looking
 											break
@@ -420,7 +420,7 @@ class Parse:
 		"""
 
 		s = input_string
-		s = s.translate(self.punctuation_transtable).lower()
+		s = s.translate(self.punctuation_transtable).lower().replace("j", "i").replace("v", "u")
 		s = s.replace("—", " ")
 		s = re.sub("\d", " ", s)
 
